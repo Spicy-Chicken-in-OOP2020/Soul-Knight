@@ -1,7 +1,7 @@
 #include "Hero.h"
 
 
-Hero::Hero():_weapon(1){}//默认小手枪
+Hero::Hero() :_weapon(1) {}//默认小手枪
 
 Hero::~Hero() = default;
 
@@ -21,6 +21,19 @@ bool Hero::init(Sprite * sprite) {
 	bindSprite(sprite);
 
 	return true;
+}
+
+void Hero::setController(GameController * gamecontroller) {
+	_gameController = gamecontroller;
+	_gameController->setMyControlListener(this);
+}
+
+void Hero::setTagPosition(int x, int y) {
+	setPosition(Point(x, y));
+}
+
+Point Hero::getTagPosition() {
+	return getPosition();
 }
 
 Hero* Hero::createFromJsonFile(int modelId) {
@@ -64,9 +77,9 @@ bool Hero::initFromJsonFileByID(int modelId) {
 	*/
 	Sprite* sprite = Sprite::create(
 		StringUtils::format("hero_%d.png", 1));
-	if (sprite && init(sprite)) 
+	if (sprite && init(sprite))
 		return true;
-	
+
 	return false;
 
 }
@@ -91,5 +104,13 @@ void Hero::attack(Entity * entity) {
 }
 
 void Hero::deadResult() {
+
+}
+
+void Hero::addMp() {
+
+}
+
+void Hero::addHp() {
 
 }

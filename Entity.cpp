@@ -4,9 +4,6 @@ Entity::Entity()
 
 Entity::~Entity() = default;
 
-void Entity::bindController() {
-
-}
 
 void Entity::bindSprite(Sprite * sprite) {
 	if (_sprite)

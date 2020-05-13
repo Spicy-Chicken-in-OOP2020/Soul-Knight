@@ -10,8 +10,6 @@ public:
 
 	void bindSprite(Sprite* sprite);		/*绑定对象*/
 	Sprite* getSprite();
-
-	void bindController();               /*绑定控制器*/
 		
 	bool isDead();							/*是否死亡*/
 
