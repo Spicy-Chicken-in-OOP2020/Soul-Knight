@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="60" height="10" tilewidth="48" tileheight="48" infinite="1" nextlayerid="6" nextobjectid="11">
+ <tileset firstgid="1" source="图块集合/Inside_A2.tsx"/>
+ <tileset firstgid="193" source="图块集合/SF_Outside_B.tsx"/>
+ <tileset firstgid="449" source="图块集合/SF_Outside_C.tsx"/>
+ <tileset firstgid="705" source="图块集合/Outside_B.tsx"/>
+ <tileset firstgid="961" source="图块集合/SF_Inside_B.tsx"/>
+ <tileset firstgid="1217" source="图块集合/Inside_A5.tsx"/>
+ <tileset firstgid="1345" source="图块集合/Inside_B.tsx"/>
+ <tileset firstgid="1601" source="图块集合/Inside_C.tsx"/>
+ <tileset firstgid="1857" source="图块集合/SF_Inside_C.tsx"/>
+ <tileset firstgid="2113" source="图块集合/Inside_A4.tsx"/>
+ <tileset firstgid="2353" source="Dungeon_C.tsx"/>
+ <tileset firstgid="2609" source="图块集合/Outside_A2.tsx"/>
+ <tileset firstgid="2801" source="图块集合/Outside_A1.tsx"/>
+ <tileset firstgid="2993" source="图块集合/通行度.tsx"/>
+ <layer id="1" name="ground" width="60" height="10">
+  <data encoding="base64" compression="zlib">
+   <chunk x="0" y="0" width="16" height="16">
+   eJxjYBgZwJALOx5q+hORMKX6E0nUj66XFP3Y9JJqPzKmVP9QjX9y9eMCAJ3+FFk=
+  </chunk>
+   <chunk x="16" y="0" width="16" height="16">
+   eJxjYBjawJCLNPySAxWTo/8gEiZH/0UkTI5+QQYETuQiDsP0HyRTPwxfpFC/KReqfpi7iNXPwIBbP7bwQtePHn6Uhj+p+tHDn1T9oPCnJgAAIPM82w==
+  </chunk>
+   <chunk x="32" y="0" width="16" height="16">
+   eJxjYBja4CUHZfggGj4ExG7MCIwuj6wOpP8iGr4ExK7MCIwuj6wOpF+QARXPYMQUw4ZPMmDXTyy+yALxByX6L2LRvxzkByS8Ao9+RiziM7BgUvRvR9O7A49+SsOPUv2gNIQOQGYaM0DwSyzyyOAShfpBAABUzEfI
+  </chunk>
+   <chunk x="48" y="0" width="16" height="16">
+   eJxjYBh48JKDPIys/yCJGF3/RRIxun5jBtIwTD/ML+TqB/nlEAX6QX65RIF+UvVRWz+5cUBt/QexmDeZAYLR1YLAITSxiyTqv4RFjBT9MAAAFlVT8g==
+  </chunk>
+   <chunk x="32" y="16" width="16" height="16">
+   eJxjYEAFLzkYGIwZIBjERgcgMWSMTZ6Q/oNImBz9F5EwIf3Y8GQGBMan/yAHJj5Egv6LHJj4EhH6keUJYXRwkEL92MIUn/tIBYTCjxAgFH6jgDQAAIpmQP4=
+  </chunk>
+   <chunk x="48" y="16" width="16" height="16">
+   eJx7ycHA8BIHnswAwdjkYOAgB3Z8CEk/ujiy/osc2PElJP3o4sj6J5OBR/UPrP5DFOq/hKR/FFAGAM9mZZ0=
+  </chunk>
+  </data>
+ </layer>
+ <layer id="2" name="carpet" width="60" height="10">
+  <data encoding="base64" compression="zlib">
+   <chunk x="0" y="0" width="16" height="16">
+   eJxjYBgFxIIS5oF2wSgYLMCTi4HBi4t8/ZFAvVEU6KcWAAA9zwHm
+  </chunk>
+   <chunk x="16" y="0" width="16" height="16">
+   eJxjYBgF6MCTi4HBiwvCZuZmYGDhxq22hBlTLBKoNwqqXxioVwSP/qEMMlgo019BoX5aAWxxSgho49FTRIZ59AIAh5AEQg==
+  </chunk>
+   <chunk x="32" y="0" width="16" height="16">
+   eJxjYBgFo2BwgQwWBCYGXOFkYLgKxNc4IfwKFgTGBXYgyT0B6nsKxM84yXPvF6C+r0D8jUz9AwkAPt8L0w==
+  </chunk>
+   <chunk x="48" y="0" width="16" height="16">
+   eJxjYBgFwwXsYMFOj4JRgAsAAM0gAjU=
+  </chunk>
+  </data>
+ </layer>
+ <layer id="3" name="furniture" width="60" height="10">
+  <data encoding="base64" compression="zlib">
+   <chunk x="0" y="0" width="16" height="16">
+   eJxjYBgFo2AUkApKmAfaBdQBAGD1AHg=
+  </chunk>
+   <chunk x="16" y="0" width="16" height="16">
+   eJxjYBgFAwEamRgYmpnI1z8RqHcyBfqpAbazka6nkIsyO0nRv5CZgWERM4ImBpQxQzBIz2IgXoJEE2NGOTMEbwTizUC8BYneRIT+NmYIBoGNUD0bidRLDgAA0/EUZg==
+  </chunk>
+   <chunk x="32" y="0" width="16" height="16">
+   eJxjYBgF6OAQlL5IhNoWJgaGViYI+w4QdzBiqpnKDlQDxKlArMmCKjcFqHcqVP8bIJ6Bpt8cKPeemYHhAxCXAvVboumnBHSzUs8sZMDGTpl+DqD+bUB/XmGjjnuwgZPMEHoj0I7nFLqXHPCLmf52YgMAlNMQ/g==
+  </chunk>
+   <chunk x="48" y="0" width="16" height="16">
+   eJxjYBgFyMCXhYFBD4j1WTDltDkYGHSAWJcDt/5YoD47ILZH0v+dnYHhBxBbA/XZALEtDv2GOMTZgeIcOOS6WSEYGWzD4nZc4CIevww2oAd0qz4QG5DpZjugPnsgdhhCfqY1AADIpwmH
+  </chunk>
+   <chunk x="48" y="16" width="16" height="16">
+   eJxjYBg6oJGJMv0TKdQ/CkbBcAMAfKEBFw==
+  </chunk>
+  </data>
+ </layer>
+ <objectgroup id="4" name="event">
+  <object id="4" name="gamestart" x="1776.33" y="238.667" width="142.667" height="49"/>
+  <object id="5" name="mailbox" x="1930.67" y="289" width="31" height="47"/>
+  <object id="6" name="readingtext" x="1439.33" y="240.333" width="48.3333" height="95"/>
+  <object id="7" name="readingtext2" x="1505.33" y="240.667" width="110.667" height="95.3333"/>
+  <object id="8" name="readingtext3" x="2258" y="337.667" width="46.3333" height="94.6667"/>
+  <object id="9" name="readingtext4" x="2304.67" y="337.667" width="47.3333" height="93.6667"/>
+  <object id="10" name="readingtext5" x="2352.67" y="337.667" width="46.6667" height="94.3333"/>
+ </objectgroup>
+ <layer id="5" name="collision" width="60" height="10">
+  <data encoding="base64" compression="zlib">
+   <chunk x="0" y="0" width="16" height="16">
+   eJxjYBj8YCM3bkysfkrtH9U/qn8o68eFAacCExk=
+  </chunk>
+   <chunk x="16" y="0" width="16" height="16">
+   eJxjYBhYsJGbdExN+4hVP1D6sZmHzVxS9ZML0P0ymAG2sCbkZlx6CMUZLrXYzCHGflzuoRSjAwC9YDoF
+  </chunk>
+   <chunk x="32" y="0" width="16" height="16">
+   eJxjYBjaYCP34MCUugVZPyH/4VJLTtjRQj81zKWG/4i1g1x7KHEfLnuRxYhNN/j0EwIA+gs89Q==
+  </chunk>
+   <chunk x="48" y="0" width="16" height="16">
+   eJxjYBh4sJEbgdH5+DA2/aRgaurH5Rd85iPLoZuDLXzQxXDpJ2QeLv2kAHL0UKofV/gTax6l+vGpJyd9ETIPn9sIuZeQfhgAAFWBRcU=
+  </chunk>
+   <chunk x="32" y="16" width="16" height="16">
+   eJxjYEAFG7mxs5HFkDE2+cGkHxvGBwaTfnIArfUPdvcRo5/YuBgJAADX3yP9
+  </chunk>
+   <chunk x="48" y="16" width="16" height="16">
+   eJzbyM3AsBEHhgFc4tjk6KEf3QxiAUwfufrRzRnVP/D68aUfYtLWSAcA/egp3Q==
+  </chunk>
+  </data>
+ </layer>
+</map>
