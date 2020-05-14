@@ -1,6 +1,6 @@
 #include "Entity.h"
-Entity::Entity() 
-	:_sprite(nullptr), _isDead(false), _modelId(0), _hp(0), _defese(0), _mp(0),_attack(0) {}
+Entity::Entity()
+	:_sprite(nullptr), _isDead(false), _modelId(0), _hp(0), _defense(0), _mp(0), _attack(0) {}
 
 Entity::~Entity() = default;
 
@@ -24,5 +24,3 @@ Sprite* Entity::getSprite() {
 bool Entity::isDead() {
 	return _isDead;
 }
-
-

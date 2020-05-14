@@ -10,7 +10,7 @@ public:
 
 	void bindSprite(Sprite* sprite);		/*绑定对象*/
 	Sprite* getSprite();
-		
+
 	bool isDead();							/*是否死亡*/
 
 	virtual void attack(Entity* entity) = 0;/*攻击*/
@@ -25,8 +25,11 @@ protected:
 
 	CC_SYNTHESIZE(int, _modelId, modelId);  /*Json文件英雄id*/
 	CC_SYNTHESIZE(int, _hp, hp);			/*生命值*/
-	CC_SYNTHESIZE(int, _defese, defense);	/*防御力*/
+	CC_SYNTHESIZE(int, _hpMax, hpMax);		/*生命值上限*/
+	CC_SYNTHESIZE(int, _defense, defense);	/*防御力*/
+	CC_SYNTHESIZE(int, _defenseMax, defenseMax);		/*防御力上限*/
 	CC_SYNTHESIZE(int, _mp, mp);			/*魔法值*/
+	CC_SYNTHESIZE(int, _mpMax, mpMax);		/*魔力值上限*/
 	CC_SYNTHESIZE(int, _attack, attack);    /*攻击力*/
 };
 
