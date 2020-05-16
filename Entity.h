@@ -20,7 +20,6 @@ protected:
 	Sprite* _sprite;
 	bool _isDead;
 
-
 	virtual void deadResult() = 0;			/*死亡时调用*/
 
 	CC_SYNTHESIZE(int, _modelId, modelId);  /*Json文件英雄id*/
