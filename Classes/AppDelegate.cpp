@@ -23,9 +23,7 @@
  ****************************************************************************/
 
 #include "AppDelegate.h"
-#include "HelloWorldScene.h"
-#include "StartScene.h"
-#include "SafeRoomScene.h"
+#include "SceneManager.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -119,11 +117,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
-    // create a scene. it's an autorelease object
-    auto scene = SafeRoomScene::createScene();
-
-    // run
-    director->runWithScene(scene);
+    SceneManager::getInstance()->changeScene(SceneManager::SafeRoomScene);
 
     return true;
 }

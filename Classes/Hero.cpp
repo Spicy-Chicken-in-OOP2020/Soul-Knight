@@ -22,9 +22,13 @@ bool Hero::init(Sprite * sprite) {
 	return true;
 }
 
-void Hero::setController(GameController * gameController) {
+void Hero::setController(GameController* gameController, GameController* shotController) {
 	_gameController = gameController;
+	_shotController = shotController;
+	log("ShootController is added!\n");
 	_gameController->setMyControlListener(this);
+	_shotController->setMyControlListener(this);
+	this->addChild(_shotController);
 }
 
 void Hero::setTagPosition(int x, int y) {
@@ -176,4 +180,9 @@ void Hero::setDefense(int defenseValue) {
 	setmp(defenseValue);
 	_mpLoadingBar->setPercent(defenseValue * 100 / getdefenseMax());
 	_mpLabel->setString(CCString::createWithFormat("%d", getdefense())->getCString());
+}
+
+GameController* Hero::getMoveController()
+{
+	return this->_gameController;
 }

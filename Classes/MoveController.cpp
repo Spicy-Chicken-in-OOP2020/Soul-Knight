@@ -14,18 +14,6 @@ bool MoveController::init() {
 	
 	return true;
 }
-void MoveController::setUpSpeed(int speed) {
-	this->upSpeed = speed;
-}
-void MoveController::setLeftSpeed(int speed) {
-	this->leftSpeed = speed;
-}
-void MoveController::setRightSpeed(int speed) {
-	this->rightSpeed = speed;
-}
-void MoveController::setDownSpeed(int speed) {
-	this->downSpeed = speed;
-}
 void MoveController::update(float dt) {
 	if (MyControlListener == NULL) {
 		return;
@@ -34,6 +22,7 @@ void MoveController::update(float dt) {
 	curPos.x += rightSpeed - leftSpeed;
 	curPos.y += upSpeed - downSpeed;
 	MyControlListener->setTagPosition(curPos.x, curPos.y);
+
 }
 void MoveController::registeKeyBoardEvent() {
 	auto keyBoardListener = EventListenerKeyboard::create();
@@ -51,6 +40,7 @@ void MoveController::registeKeyBoardEvent() {
 		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 			setRightSpeed(3);
 			break;
+			
 		}
 	};
 	keyBoardListener->onKeyReleased = [&](EventKeyboard::KeyCode keyCode, Event* event) {
@@ -67,6 +57,7 @@ void MoveController::registeKeyBoardEvent() {
 		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 			setRightSpeed(0);
 			break;
+			
 		}
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyBoardListener, this);

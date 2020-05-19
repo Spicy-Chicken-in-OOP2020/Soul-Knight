@@ -23,7 +23,10 @@ public:
 	bool initFromJsonFileByID(int modelId);
 
 	/*绑定控制器*/
-	void setController(GameController* gameController);
+	void setController(GameController* gameController, GameController* shotController);
+	/*读取控制器*/
+	GameController* getMoveController();
+
 
 	/* ControlListener接口方法实现*/
 	virtual void setTagPosition(int x, int y);
@@ -50,6 +53,7 @@ public:
 	CC_SYNTHESIZE(int, _weapon, weapon);
 private:
 	GameController* _gameController;
+	GameController* _shotController;
 	TMXTiledMap* _safeRoomMap;
 
 	/*UI进度条*/

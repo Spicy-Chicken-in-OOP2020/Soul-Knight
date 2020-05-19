@@ -1,17 +1,20 @@
 #include "SafeRoomScene.h"
 #include "Hero.h"
 #include "MoveController.h"
+#include "ShootController.h"
 #include "editor-support/cocostudio/CCSGUIReader.h"
 #include "ui/CocosGUI.h"
 USING_NS_CC;
 using namespace cocos2d::ui;
 using namespace cocostudio;
 
+class ShootController;
 
 Scene* SafeRoomScene::createScene() {
 	auto scene = Scene::create();
 	auto layer = SafeRoomScene::create();
 	scene->addChild(layer);
+
 	return scene;
 }
 
@@ -27,6 +30,7 @@ bool SafeRoomScene::init() {
 	auto mainUI = GUIReader::getInstance()->widgetFromJsonFile("MainUI.ExportJson");
 	layer->addChild(mainUI);
 	this->addChild(layer);
+	layer->setPosition(Point(100,100));
 	
 	//获取按钮事件
 	Button* stopButton = (Button*)Helper::seekWidgetByName(mainUI, "stopButton");
@@ -46,6 +50,8 @@ bool SafeRoomScene::init() {
 	auto playerMpMaxLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryMpMax");
 	hero->bindHp(playerMpUI, playerMpLabel, playerMpMaxLabel);
 
+	
+
 	return true;
 }
 Hero* SafeRoomScene::addHero(TMXTiledMap* map) {
@@ -62,8 +68,11 @@ Hero* SafeRoomScene::addHero(TMXTiledMap* map) {
 	mPlayer->setSafeRoomTiledMap(map);
 
 	MoveController* move = MoveController::create();
+	ShootController* shoot = ShootController::create();
 	this->addChild(move);
-	mPlayer->setController(move);
+	
+	
+	mPlayer->setController(move,shoot);
 
 	TMXObjectGroup* heroGroup = map->getObjectGroup("hero");
 	ValueMap heroPointMap = heroGroup->getObject("heroDir");

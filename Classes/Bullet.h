@@ -3,25 +3,36 @@
 
 #include "cocos2d.h"
 USING_NS_CC;
+
 class Bullet :public Node
 {
+private:
+	//子弹状态
+	bool isActive;
+	//图片对象
+	Sprite* bulletSprite;
+	//子弹速度
+	double speed = 0.1f;
+
+	//最终位置
+	int finalX;
+	int finalY;
+
 public:
-	bool isActive;//当前是否被使用
-	Sprite* bullet;//图片
-	int speed;
-	void shoot(Point position);//发射子弹
-	static Bullet* createBullet(Point position);
-	void bulletInit(Point position);
-	static Scene* createScene();
+	//构造函数
+	Bullet();
 	virtual bool init();
+	//发射子弹
+	void shoot(Point position);
+	//设置子弹状态
 	void setActive(bool _isActive);
+	//获得子弹状态
+	bool getActive();
 	//判定是否到达目标
 	bool isArrive();
-	CREATE_FUNC(Bullet);
-	//获取射击方向
-	int leftSpeed;
-	int rightSpeed;
-	int upSpeed;
-	int downSpeed;
+	//绑定图像
+	void bindSprite(Sprite *sprite);
+	//更新函数
+	void update(float dt);
 };
 #endif // !_BULLET_H__

@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 #include "Hero.h"
+#include "ShootController.h"
+
 USING_NS_CC;
 
 class SafeRoomScene :public Scene {
