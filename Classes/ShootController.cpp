@@ -6,7 +6,7 @@ bool ShootController::init()
 	isShot = false;
 	registeKeyBoardEvent();
 
-	this->schedule(schedule_selector(ShootController::bulletUpdate), 1.0f);
+	this->schedule(schedule_selector(ShootController::bulletUpdate), 0.5f);
 
 	//初始化子弹
 	Bullet*bullet = NULL;
@@ -15,7 +15,8 @@ bool ShootController::init()
 		bullet = new Bullet;
 		bulletList[i] = bullet;
 		//加入子层中
-		this->addChild(bullet);
+		//this->addChild(bullet);  
+		GlobalParameter::mapNow->getParent()->addChild(bullet);
 	}
 
 	return true;

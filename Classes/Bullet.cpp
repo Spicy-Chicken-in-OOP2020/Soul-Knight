@@ -27,12 +27,30 @@ bool Bullet::init()
 void Bullet::shoot(Point position)
 {
 	log("This bullet is shot!");
-	//设定初始发射位置
+	//获取初始发射位置
 	this->setPosition(position);
 
 	//设定最终地点
-	finalX = position.x+10000;
-	finalY = position.y+10000;
+	if (GlobalParameter::rightSide)
+		finalX = position.x + 10000;
+	else if (GlobalParameter::leftSide)
+		finalX = position.x - 10000;
+	else
+		finalX = position.x;
+
+	if (GlobalParameter::upSide)
+		finalY = position.y + 10000;
+	else if (GlobalParameter::downSide)
+		finalY = position.y - 10000;
+	else
+		finalY = position.y;
+
+	//持续移动
+	MoveTo* moveTo = MoveTo::create(sqrt(
+		(finalX-position.x)*(finalX - position.x)+ 
+		(finalY - position.y)*(finalY - position.y))/speed,
+		Point(finalX, finalY));
+	this->runAction(moveTo);
 
 	//添加移动事件
 	this->scheduleUpdate();
@@ -48,7 +66,36 @@ void Bullet::setActive(bool _isActive)
 //判断是否到达目标
 bool Bullet::isArrive()
 {
+	//获得当前物体坐标
+	Point position = this->getPosition();
+
 	//判断是否触及障碍物
+	Size mapSize = GlobalParameter::mapNow->getMapSize();
+	Size tileSize = GlobalParameter::mapNow->getTileSize();
+
+	//读取当前所在地图的障碍物层
+	TMXLayer* collisionLayer = GlobalParameter::mapNow->getLayer("collision");
+
+	//获得坐标在地图中的格子位置
+	Point tiledPos(position.x / tileSize.width, (mapSize.height*tileSize.height - position.y) / tileSize.height);
+
+	if (position.x < 0)
+	{
+		//迷之报错，在这里隐藏掉
+		log("What's wrong with you?");
+		return true;
+	}
+
+	//获取地图格子的唯一表示
+	int tiledGid = collisionLayer->getTileGIDAt(tiledPos);
+
+	//图块ID不为空，表示是障碍物
+	if (tiledGid !=0 )
+	{
+		return true;
+		
+	}
+
 
 	//判断是否碰到敌人
 
@@ -71,12 +118,11 @@ void Bullet::update(float dt)
 	//判断是否到达
 	if (this->isArrive())
 	{
+		this->stopAllActions();
 		this->unscheduleUpdate();
 		this->setActive(false);
 	}
-	//持续移动
-	MoveTo* moveTo = MoveTo::create(100, Point(0, 0));
-	this->runAction(moveTo);
+	
 }
 
 bool Bullet::getActive()

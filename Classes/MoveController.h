@@ -2,6 +2,7 @@
 #define _MOVE_CONTROLLER_H__
 
 #include "GameController.h"
+#include "GlobalParameter.h"
 
 class MoveController :public GameController {
 public:

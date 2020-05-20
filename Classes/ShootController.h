@@ -2,12 +2,12 @@
 #define _SHOOT_CONTROLLER_H__
 
 
-#include"GameController.h"
+#include "GameController.h"
 #include "Bullet.h"
 #include "MoveController.h"
 #include "Hero.h"
 #include "SimpleAudioEngine.h"
-#define MAX_BULLET_NUM 100
+#define MAX_BULLET_NUM 50
 
 class ShootController :public GameController
 {

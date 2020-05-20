@@ -151,8 +151,8 @@ void StartScene::NewGameEvent(Ref*,TouchEventType type)
         case TouchEventType::TOUCH_EVENT_ENDED: {
             //TODO:
 
-             Director::getInstance()->replaceScene(SafeRoomScene::create());
-
+             Director::getInstance()->replaceScene(SafeRoomScene::createScene());
+			
 
         }
     }

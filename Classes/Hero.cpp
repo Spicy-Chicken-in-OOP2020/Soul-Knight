@@ -31,10 +31,39 @@ void Hero::setController(GameController* gameController, GameController* shotCon
 	this->addChild(_shotController);
 }
 
-void Hero::setTagPosition(int x, int y) {
-	setPosition(Point(x, y));
+bool Hero::setTagPosition(int x, int y) {
+	/*在这里需要判断能否更新坐标位置*/
+	//获得当前物体坐标
 
-	setViewPointByHero();
+	//判断是否触及障碍物
+	Size mapSize = GlobalParameter::mapNow->getMapSize();
+	Size tileSize = GlobalParameter::mapNow->getTileSize();
+
+	//读取当前所在地图的障碍物层
+	TMXLayer* collisionLayer = GlobalParameter::mapNow->getLayer("collision");
+
+	//获得坐标在地图中的格子位置
+	Point tiledPos(x / tileSize.width, (mapSize.height*tileSize.height - y) / tileSize.height);
+
+	if (x < 0)
+	{
+		//迷之报错，在这里隐藏掉
+		log("What's wrong with you?");
+		return false;
+	}
+
+	//获取地图格子的唯一表示
+	int tiledGid = collisionLayer->getTileGIDAt(tiledPos);
+
+	//图块ID不为空，表示是障碍物
+	if (tiledGid != 0)
+	{
+		return false;
+	}
+
+	this->setPosition(Point(x, y));
+
+	this->setViewPointByHero();
 }
 
 Point Hero::getTagPosition() {
@@ -109,7 +138,7 @@ void Hero::setViewPointByHero() {
 	Point centerPos = Point(visibleSize.width / 2, visibleSize.height / 2);
 
 	Point viewPos = centerPos - destPos;
-
+	//_safeRoomMap->setPosition(viewPos);
 	parent->setPosition(viewPos);
 }
 

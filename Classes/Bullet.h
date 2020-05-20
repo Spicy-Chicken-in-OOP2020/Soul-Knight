@@ -1,8 +1,7 @@
 #ifndef _BULLET_H__
 #define _BULLET_H__
 
-#include "cocos2d.h"
-USING_NS_CC;
+#include "GlobalParameter.h"
 
 class Bullet :public Node
 {
@@ -12,7 +11,7 @@ private:
 	//图片对象
 	Sprite* bulletSprite;
 	//子弹速度
-	double speed = 0.1f;
+	int speed = 500;
 
 	//最终位置
 	int finalX;

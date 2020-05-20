@@ -6,6 +6,7 @@
 #include "ControlListener.h"
 #include "editor-support/cocostudio/CCSGUIReader.h"
 #include "ui/CocosGUI.h"
+#include "GlobalParameter.h"
 USING_NS_CC;
 using namespace cocos2d::ui;
 using namespace cocostudio;
@@ -29,7 +30,7 @@ public:
 
 
 	/* ControlListener接口方法实现*/
-	virtual void setTagPosition(int x, int y);
+	virtual bool setTagPosition(int x, int y);
 	virtual Point getTagPosition();
 	void setViewPointByHero();
 	void setSafeRoomTiledMap(TMXTiledMap* map);
@@ -68,6 +69,9 @@ private:
 	Label* _defenseMaxLabel;
 	Label* _mpLabel;
 	Label* _mpMaxLabel;
+
+	/*卡死我了*/
+	bool isStuck;
 	
 };
 

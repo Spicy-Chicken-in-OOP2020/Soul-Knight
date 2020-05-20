@@ -7,7 +7,7 @@ USING_NS_CC;
 
 class ControlListener {
 public:
-	virtual void setTagPosition(int x, int y) = 0;
+	virtual bool setTagPosition(int x, int y) = 0;
 
 	virtual Point getTagPosition() = 0;
 };
