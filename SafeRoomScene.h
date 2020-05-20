@@ -11,6 +11,12 @@ public:
 	virtual bool init();
 	static Scene* createScene();
 	Hero* addHero(TMXTiledMap* map);
+
+	Layer* mainUiInit(Hero* hero);
+
+private:
+
+	Hero* _hero;
 };
 
 #endif
