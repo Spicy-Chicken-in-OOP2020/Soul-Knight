@@ -1,17 +1,20 @@
 #include "SafeRoomScene.h"
 #include "Hero.h"
 #include "MoveController.h"
-#include "ShootController.h"
 #include "editor-support/cocostudio/CCSGUIReader.h"
 #include "ui/CocosGUI.h"
+
 USING_NS_CC;
+
 using namespace cocos2d::ui;
 using namespace cocostudio;
 
-
 Scene* SafeRoomScene::createScene() {
+	/*创建物理世界的场景*/
 	auto scene = Scene::create();
+
 	auto layer1 = SafeRoomScene::create();
+	layer1->onEnter();
 	scene->addChild(layer1);
 
 	auto layer2 = layer1->mainUiInit(layer1->_hero);
@@ -32,11 +35,46 @@ bool SafeRoomScene::init() {
 	//add hero
 	_hero = addHero(safeRoomMap);
 
+	//世界主角
+	GlobalParameter::hero = _hero;
+
+	Monster* monster = nullptr;
 	//test monster
-	//auto monsterMgr = MonsterManager::createMonsterManagerWithLevel(1);
-	//this->addChild(monsterMgr);
+	/*MonsterManager* monsterManager = MonsterManager::createMonsterManagerWithLevel(1);
+	GlobalParameter::monsterManager = monsterManager;
+	this->addChild(GlobalParameter::monsterManager);
+*/
+
+	
+
+//读取地刺层
+	TMXObjectGroup* spikeGroup = GlobalParameter::mapNow->getObjectGroup("spikeWeed");
+	//获取所有地刺
+	ValueMap spikePointVec;
+
+	int spikeNum = 0;
+
+	//当可以继续读取时
+	while ((spikePointVec = spikeGroup->getObject(StringUtils::format("spikeWeed%d", spikeNum + 1))).size())
+	{
+		log("A spikeWeed is loading!");
+		spikeNum++;
+
+		//在该位置放置地刺
+		float spikeX = spikePointVec.at("x").asFloat();
+		float spikeY = spikePointVec.at("y").asFloat();
+
+		//生成一个新的地刺
+		SpikeWeed* spikeweed = new SpikeWeed();
+		spikeweed->setPosition(Point(spikeX, spikeY));
+		spikeList.pushBack(spikeweed);
+		GlobalParameter::mapNow->getParent()->addChild(spikeweed);
+	}
+	
+
 	return true;
 }
+
 Hero* SafeRoomScene::addHero(TMXTiledMap* map) {
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -53,10 +91,9 @@ Hero* SafeRoomScene::addHero(TMXTiledMap* map) {
 	MoveController* move = MoveController::create();
 	ShootController* shoot = ShootController::create();
 	this->addChild(move);
-	
-	
-	mPlayer->setController(move,shoot);
 
+	mPlayer->setController(move, shoot);
+	
 	TMXObjectGroup* heroGroup = map->getObjectGroup("hero");
 	ValueMap heroPointMap = heroGroup->getObject("heroDir");
 

@@ -64,6 +64,8 @@ bool Hero::setTagPosition(int x, int y) {
 	this->setPosition(Point(x, y));
 
 	this->setViewPointByHero();
+
+	return true;
 }
 
 Point Hero::getTagPosition() {

@@ -4,9 +4,9 @@
 
 #include "GameController.h"
 #include "Bullet.h"
-#include "MoveController.h"
 #include "Hero.h"
 #include "SimpleAudioEngine.h"
+
 #define MAX_BULLET_NUM 50
 
 class ShootController :public GameController

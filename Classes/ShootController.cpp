@@ -50,7 +50,6 @@ void ShootController::bulletUpdate(float dt)
 	{
 		//获取到主角的坐标位置
 		auto hero = (Hero*)this->getParent();
-		auto moveController = (MoveController*)hero->getMoveController();
 
 		//对子弹进行遍历，获得可使用的子弹
 		for (int i = 0; i < MAX_BULLET_NUM; i++)

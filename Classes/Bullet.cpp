@@ -165,8 +165,6 @@ void Bullet::update(float dt)
 		animation->setDelayPerUnit(0.1f);
 
 		Animate* action = Animate::create(animation);
-		
-		//this->runAction(action);
 
 		//创建一个回调函数
 		CallFunc* callFunc = CallFunc::create(
