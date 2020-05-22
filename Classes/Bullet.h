@@ -3,6 +3,7 @@
 
 #include "GlobalParameter.h"
 
+
 class Bullet :public Node
 {
 private:
@@ -10,6 +11,8 @@ private:
 	bool isActive;
 	//图片对象
 	Sprite* bulletSprite;
+	//动画对象
+	Sprite* actionSprite;
 	//子弹速度
 	int speed = 500;
 
@@ -33,5 +36,7 @@ public:
 	void bindSprite(Sprite *sprite);
 	//更新函数
 	void update(float dt);
+	//获得绑定的图像
+	Sprite* getBindSprite();
 };
 #endif // !_BULLET_H__
