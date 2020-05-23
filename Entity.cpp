@@ -13,7 +13,9 @@ void Entity::bindSprite(Sprite * sprite) {
 	this->addChild(_sprite);
 
 	Size size = _sprite->getContentSize();
+
 	this->setContentSize(size);
+	this->setAnchorPoint(Point(0, 0));
 
 }
 
