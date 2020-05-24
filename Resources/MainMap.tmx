@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="63" height="28" tilewidth="48" tileheight="48" infinite="0" nextlayerid="26" nextobjectid="21">
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="63" height="28" tilewidth="48" tileheight="48" infinite="0" nextlayerid="27" nextobjectid="27">
  <tileset firstgid="1" source="Inside_A2.tsx"/>
  <tileset firstgid="193" source="SF_Outside_B.tsx"/>
  <tileset firstgid="449" source="SF_Outside_C.tsx"/>
@@ -16,7 +16,7 @@
  <tileset firstgid="2993" source="通行度.tsx"/>
  <layer id="5" name="collision" width="63" height="28">
   <data encoding="base64" compression="zlib">
-   eJztV1sOgDAI89/7H8Qb+kvmNigrDiNNlugepYUF43EUCn1cJ3dE6kP0WrkjdLLyGFmDFe9tnPLO89Dq63nLdOd7euRcu9+Sp5nOES+il4Go3iG5tVwgOqK8r/Ki93ekg7GPhTfiZfburaeVN9o70o+83PLdo8dyBtWk9eR2vwcrvYPpXftGyzUGLN/w2Vpk3bW4o/jI2VndtTuBeGcNSyxUXyTPm7DUC82z567vQHl/Psu5Ve9Z/bP684z7j957MTKhvH8/hgfl3b/OiJEV5X0/xw4w/ytusw4dvA==
+   eJztV1sOgCAM49/7H8Qb+rvgYA86mHFNSJRH1zIytLVCgcd9YVukPoteLXeETtQ+RuZgxXsfp7zjPPT6OG+Zzjynh/b18zX7NNM54rXoRSCqdlBuaS8sOqK8r/Jaz+9IB2IeCjviZfbuzaeWN9q7pR55uem7R49mjVWTVJP7+R6s1A6kd+mOpmMIaO7w2Vhk3qW40veKdu1Io3QmLN5RTRPLqi+SZyc0+Vo9P1lR3t/PtA9RNzICVZ9n3H/0zsXIhPL+/RgelHf/OCJGVpT38xwngPyveACnCyCs
   </data>
  </layer>
  <layer id="1" name="ground" width="63" height="28">
@@ -115,5 +115,12 @@
   <object id="8" name="readingtext3" x="2258" y="337.667" width="46.3333" height="94.6667"/>
   <object id="9" name="readingtext4" x="2304.67" y="337.667" width="47.3333" height="93.6667"/>
   <object id="10" name="readingtext5" x="2352.67" y="337.667" width="46.6667" height="94.3333"/>
+ </objectgroup>
+ <objectgroup id="26" name="spikeWeed">
+  <object id="21" name="spikeWeed1" x="723" y="289" width="45" height="45"/>
+  <object id="23" name="spikeWeed2" x="721" y="338" width="46" height="46"/>
+  <object id="24" name="spikeWeed2" x="721" y="338" width="46" height="46"/>
+  <object id="25" name="spikeWeed2" x="721" y="338" width="46" height="46"/>
+  <object id="26" name="spikeWeed3" x="722" y="385" width="45" height="46"/>
  </objectgroup>
 </map>
