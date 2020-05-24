@@ -4,7 +4,8 @@
 #include "cocos2d.h"
 #include "editor-support/cocostudio/CCSGUIReader.h"
 #include "ui/CocosGUI.h"
-#include "Hero.h"
+//#include "Hero.h"
+//#include "Hero.h"
 USING_NS_CC;
 
 using namespace cocos2d::ui;
@@ -27,8 +28,15 @@ public:
 	static bool downSide;
 	static bool leftSide;
 	static bool rightSide;
+
+	static bool imageRightSide;
+	static bool imageLeftSide;
+
 	//Ö÷½Ç
 	static Hero* hero;
+
+	//·½Ïò
+	static enum { LeftSide, RightSide, UpSide, DownSide, LeftUpSide, LeftDownSide, RightUpSide, RightDownSide };
 };
 
 

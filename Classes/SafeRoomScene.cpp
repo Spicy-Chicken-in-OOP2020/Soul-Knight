@@ -35,19 +35,16 @@ bool SafeRoomScene::init() {
 	//add hero
 	_hero = addHero(safeRoomMap);
 
-	//世界主角
-	GlobalParameter::hero = _hero;
+	
 
 	Monster* monster = nullptr;
 	//test monster
-	/*MonsterManager* monsterManager = MonsterManager::createMonsterManagerWithLevel(1);
-	GlobalParameter::monsterManager = monsterManager;
-	this->addChild(GlobalParameter::monsterManager);
-*/
+	//MonsterManager* monsterManager = MonsterManager::createMonsterManagerWithLevel(1);
+	//_monsterManager = monsterManager;
+	//this->addChild(_monsterManager);
 
-	
 
-//读取地刺层
+	//读取地刺层
 	TMXObjectGroup* spikeGroup = GlobalParameter::mapNow->getObjectGroup("spikeWeed");
 	//获取所有地刺
 	ValueMap spikePointVec;
@@ -80,7 +77,7 @@ Hero* SafeRoomScene::addHero(TMXTiledMap* map) {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	Sprite* playerSprite = Sprite::create("Knight1.png");
+	Sprite* playerSprite = Sprite::create("KnightImage.png");
 
 	Hero* mPlayer = Hero::create(playerSprite);
 	mPlayer->setPosition(Point(100, visibleSize.height / 2));
@@ -90,9 +87,13 @@ Hero* SafeRoomScene::addHero(TMXTiledMap* map) {
 
 	MoveController* move = MoveController::create();
 	ShootController* shoot = ShootController::create();
-	this->addChild(move);
+	
 
-	mPlayer->setController(move, shoot);
+	mPlayer->setController(move);
+
+	//添加主角初始武器
+	Gun* gun = new Gun(shoot, 3, "普通的枪支");
+	mPlayer->setWeapon(gun);
 	
 	TMXObjectGroup* heroGroup = map->getObjectGroup("hero");
 	ValueMap heroPointMap = heroGroup->getObject("heroDir");
@@ -101,6 +102,9 @@ Hero* SafeRoomScene::addHero(TMXTiledMap* map) {
 	float heroY = heroPointMap.at("y").asFloat();
 
 	mPlayer->setPosition(Point(heroX, heroY));
+
+	//世界主角
+	GlobalParameter::hero = mPlayer;
 
 	return mPlayer;
 }
@@ -113,17 +117,25 @@ Layer* SafeRoomScene::mainUiInit(Hero* hero) {
 
 	//获取主角HP,护甲,MP
 	auto playerHpUI = (LoadingBar*)Helper::seekWidgetByName(mainUI, "PlayerHpUI");
-	auto playerHpLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryHp");
-	auto playerHpMaxLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryHpMax");
+	auto playerHpLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundarayHpNow");
+	auto playerHpMaxLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundarayHpMax");
 	hero->bindHp(playerHpUI, playerHpLabel, playerHpMaxLabel);
 	auto playerDefendenseUI = (LoadingBar*)Helper::seekWidgetByName(mainUI, "PlayerDefendenseUI");
-	auto playerDefendenseLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryDefendense");
-	auto playerDefendenseMaxLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryDefendenseMax");
+	auto playerDefendenseLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundarayDefendenseNow");
+	auto playerDefendenseMaxLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundarayDefendenseMax");
 	hero->bindDefense(playerDefendenseUI, playerDefendenseLabel, playerDefendenseMaxLabel);
 	auto playerMpUI = (LoadingBar*)Helper::seekWidgetByName(mainUI, "PlayerMpUI");
-	auto playerMpLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryMp");
-	auto playerMpMaxLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryMpMax");
+	auto playerMpLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundarayMpNow");
+	auto playerMpMaxLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundarayMpMax");
 	hero->bindHp(playerMpUI, playerMpLabel, playerMpMaxLabel);
+
+	//设定初值，为了UI和数值的统一
+	hero->setHp(hero->gethp());
+	hero->sethpMax(hero->gethpMax());
+	hero->setMp(hero->getmp());
+	hero->setMpMax(hero->getmpMax());
+	hero->setDefense(hero->getdefense());
+	hero->setDefenseMax(hero->getdefenseMax());
 
 	return layer;
 }

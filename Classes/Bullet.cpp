@@ -1,5 +1,5 @@
 #include "Bullet.h"
-
+#include "SafeRoomScene.h"
 //构造函数
 Bullet::Bullet()
 {
@@ -100,15 +100,16 @@ bool Bullet::isArrive()
 	}
 
 	//判断是否碰到敌人
-	/*if (GlobalParameter::monsterManager != nullptr) {
-		auto monsterList = GlobalParameter::monsterManager->getMonsterList();
+	/*if (SafeRoomScene::_monsterManager != nullptr) {
+		auto monsterList = SafeRoomScene::_monsterManager->getMonsterList();
 		if (!monsterList.empty()) {
 			for (int i = 0; i < monsterList.size(); ++i) {
-				Sprite* spriteMonster = monsterList.at(i)->getSprite();
-				if (this->getBoundingBox().intersectsRect(spriteMonster->getBoundingBox())) {
+
+				if (this->getBoundingBox().intersectsRect(monsterList.at(i)->getBoundingBox())) {
 					this->setVisible(false);
 					monsterList.at(i)->getHurt(1);
 				}
+
 			}
 		}
 	}*/
@@ -127,6 +128,8 @@ void Bullet::bindSprite(Sprite * sprite) {
 
 	Size size = bulletSprite->getContentSize();
 	this->setContentSize(size);
+	//设置焦点坐标
+	this->setAnchorPoint(Point(0, 0));
 
 	///*物理body以碰撞*/
 	//PhysicsBody* phyBody = PhysicsBody::createCircle(5);

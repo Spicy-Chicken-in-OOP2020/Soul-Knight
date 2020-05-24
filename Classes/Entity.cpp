@@ -16,6 +16,8 @@ void Entity::bindSprite(Sprite * sprite) {
 
 	this->setContentSize(size);
 
+	
+
 }
 
 Sprite* Entity::getSprite() {

@@ -7,9 +7,11 @@
 #include "editor-support/cocostudio/CCSGUIReader.h"
 #include "ui/CocosGUI.h"
 #include "GlobalParameter.h"
+#include "Gun.h"
 USING_NS_CC;
 using namespace cocos2d::ui;
 using namespace cocostudio;
+
 
 
 class Hero :public Entity, public ControlListener {
@@ -24,7 +26,7 @@ public:
 	bool initFromJsonFileByID(int modelId);
 
 	/*绑定控制器*/
-	void setController(GameController* gameController, GameController* shotController);
+	void setController(GameController* gameController);
 	/*读取控制器*/
 	GameController* getMoveController();
 
@@ -50,11 +52,31 @@ public:
 	void setHp(int hpValue);
 	void setMp(int mpValue);
 	void setDefense(int defenseValue);
+	void setHpMax(int hpMaxValue);
+	void setMpMax(int mpMaxValue);
+	void setDefenseMax(int defenseMaxValue);
+
 	/*武器*/
-	CC_SYNTHESIZE(int, _weapon, weapon);
+	Weapon* weapon;
+
+	/*计时器*/
+	void defenseAutoAdd(float dt);
+
+	//设置武器
+	void setWeapon(Weapon* weapon);
+
+	//设置主角朝向
+	void setHeroRun(bool rightSide);
+	void setHeroStill(bool rightSide);
+
+	//设置武器样式
+	void update(float dt);
+
+	//左右两端的行走图
+	Vector<SpriteFrame*> leftSpriteVec, rightSpriteVec;
+
 private:
 	GameController* _gameController;
-	GameController* _shotController;
 	TMXTiledMap* _safeRoomMap;
 
 	/*UI进度条*/
@@ -73,6 +95,8 @@ private:
 	/*卡死我了*/
 	bool isStuck;
 	
+	/*护盾回复速度*/
+	float defenseRecoverSpeed;
 };
 
 #endif // !_HERO_H_

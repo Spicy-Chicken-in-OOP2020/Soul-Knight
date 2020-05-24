@@ -1,5 +1,5 @@
 #include "ShootController.h"
-
+#include "Hero.h"
 bool ShootController::init()
 {
 	//初始化状态
@@ -16,6 +16,7 @@ bool ShootController::init()
 		bulletList[i] = bullet;
 		//加入子层中
 		//this->addChild(bullet);  
+		//直接将子弹加入场景中
 		GlobalParameter::mapNow->getParent()->addChild(bullet);
 	}
 
@@ -49,7 +50,7 @@ void ShootController::bulletUpdate(float dt)
 	if (isShot)
 	{
 		//获取到主角的坐标位置
-		auto hero = (Hero*)this->getParent();
+		auto hero = (Hero*)this->getParent()->getParent();
 
 		//对子弹进行遍历，获得可使用的子弹
 		for (int i = 0; i < MAX_BULLET_NUM; i++)
@@ -60,8 +61,84 @@ void ShootController::bulletUpdate(float dt)
 
 				//设置可见性
 				bulletList[i]->setActive(true);
+				//初始发射位置
+				Point shootPosition = hero->getPosition();
+				//为了让子弹与枪支口重叠的位置修正
+				if (GlobalParameter::rightSide)
+				{
+					if (GlobalParameter::upSide)
+					{
+						//右上
+						shootPosition.x += 45;
+						shootPosition.y += 15;
+					}
+					else if (GlobalParameter::downSide)
+					{
+						//右下
+						shootPosition.x += 55;
+						shootPosition.y -= 45;
+					}
+					else
+					{
+						//仅朝右
+						shootPosition.x += 55;
+						shootPosition.y -= 15;
+					}
+				}
+				else if (GlobalParameter::leftSide)
+				{
+					if (GlobalParameter::upSide)
+					{
+						//左上
+						shootPosition.x -= 45;
+						shootPosition.y += 15;
+					}
+					else if (GlobalParameter::downSide)
+					{
+						//左下
+						shootPosition.x -= 55;
+						shootPosition.y -= 45;
+					}
+					else
+					{
+						//仅朝左
+						shootPosition.x -= 55;
+						shootPosition.y -= 15;
+					}
+				}
+				else
+				{
+					if (GlobalParameter::upSide)
+					{
+						//仅朝上
+						if (GlobalParameter::imageRightSide)
+						{
+							shootPosition.x += 20;
+							shootPosition.y += 25;
+						}
+						else
+						{
+							shootPosition.x -= 20;
+							shootPosition.y += 25;
+						}
+					}
+					else
+					{
+						//仅朝下
+						if (GlobalParameter::imageRightSide)
+						{
+							shootPosition.x += 20;
+							shootPosition.y -= 55;
+						}
+						else
+						{
+							shootPosition.x -= 20;
+							shootPosition.y -= 55;
+						}
+					}
+				}
 				//执行射击动作
-				bulletList[i]->shoot(hero->getPosition());
+				bulletList[i]->shoot(shootPosition);
 				//射击音效
 				//CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("BulletShoot.mp3");
 				break;

@@ -1,8 +1,8 @@
 #ifndef __GAMECONTROLLER_H__
 #define __GAMECONTROLLER_H__
 
-#include"ControlListener.h"
-#include"cocos2d.h"
+#include "ControlListener.h"
+#include "cocos2d.h"
 
 USING_NS_CC;
 

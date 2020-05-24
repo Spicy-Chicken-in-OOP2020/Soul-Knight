@@ -7,6 +7,7 @@
 #include "GlobalParameter.h"
 #include "Monster.h"
 #include "SpikeWeed.h"
+#include "MonsterManager.h"
 
 class SafeRoomScene :public Layer {
 public:
@@ -27,7 +28,7 @@ private:
 	Vector<SpikeWeed*> spikeList;
 
 public:
-
+	MonsterManager* _monsterManager;
 };
 
 #endif

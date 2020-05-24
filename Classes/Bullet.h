@@ -3,7 +3,6 @@
 
 #include "GlobalParameter.h"
 
-
 class Bullet :public Node
 {
 private:
