@@ -360,26 +360,25 @@ void Hero::update(float dt)
 	CCString weaponType = typeid(*(this->weapon)).name();
 	if (weaponType._string == "class Gun")
 	{
-		Gun* gun = (Gun*)this->weapon;
 		if (GlobalParameter::rightSide)
 		{
 			if (GlobalParameter::upSide)
 			{
 				//右上
-				gun->weaponSprite->setPosition(20, -20);
-				gun->weaponSprite->setSpriteFrame(*(gun->weaponSpriteVec.begin() + 1));
+				weapon->weaponSprite->setPosition(20, -20);
+				weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 1));
 			}
 			else if (GlobalParameter::downSide)
 			{
 				//右下
-				gun->weaponSprite->setPosition(20, -20);
-				gun->weaponSprite->setSpriteFrame(*(gun->weaponSpriteVec.begin() + 7));
+				weapon->weaponSprite->setPosition(20, -20);
+				weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 7));
 			}
 			else
 			{
 				//仅朝右
-				gun->weaponSprite->setPosition(20, -20);
-				gun->weaponSprite->setSpriteFrame(*(gun->weaponSpriteVec.begin()));
+				weapon->weaponSprite->setPosition(20, -20);
+				weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin()));
 			}
 		}
 		else if (GlobalParameter::leftSide)
@@ -387,20 +386,20 @@ void Hero::update(float dt)
 			if (GlobalParameter::upSide)
 			{
 				//左上
-				gun->weaponSprite->setPosition(-20, -20);
-				gun->weaponSprite->setSpriteFrame(*(gun->weaponSpriteVec.begin() + 3));
+				weapon->weaponSprite->setPosition(-20, -20);
+				weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 3));
 			}
 			else if (GlobalParameter::downSide)
 			{
 				//左下
-				gun->weaponSprite->setPosition(-20, -20);
-				gun->weaponSprite->setSpriteFrame(*(gun->weaponSpriteVec.begin() + 5));
+				weapon->weaponSprite->setPosition(-20, -20);
+				weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 5));
 			}
 			else
 			{
 				//仅朝左
-				gun->weaponSprite->setPosition(-20, -20);
-				gun->weaponSprite->setSpriteFrame(*(gun->weaponSpriteVec.begin() + 4));
+				weapon->weaponSprite->setPosition(-20, -20);
+				weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 4));
 			}
 		}
 		else
@@ -410,13 +409,13 @@ void Hero::update(float dt)
 				//仅朝上
 				if (GlobalParameter::imageRightSide)
 				{
-					gun->weaponSprite->setPosition(20, -20);
-					gun->weaponSprite->setSpriteFrame(*(gun->weaponSpriteVec.begin() + 2));
+					weapon->weaponSprite->setPosition(20, -20);
+					weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 2));
 				}
 				else
 				{
-					gun->weaponSprite->setPosition(-20, -20);
-					gun->weaponSprite->setSpriteFrame(*(gun->weaponSpriteVec.begin() + 2));
+					weapon->weaponSprite->setPosition(-20, -20);
+					weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 2));
 				}
 			}
 			else
@@ -424,19 +423,91 @@ void Hero::update(float dt)
 				//仅朝下
 				if (GlobalParameter::imageRightSide)
 				{
-					gun->weaponSprite->setPosition(20, -20);
-					gun->weaponSprite->setSpriteFrame(*(gun->weaponSpriteVec.begin() + 6));
+					weapon->weaponSprite->setPosition(20, -20);
+					weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 6));
 				}
 				else
 				{
-					gun->weaponSprite->setPosition(-20, -20);
-					gun->weaponSprite->setSpriteFrame(*(gun->weaponSpriteVec.begin() + 6));
+					weapon->weaponSprite->setPosition(-20, -20);
+					weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 6));
 				}
 			}
 		}
 	}
 	else if (weaponType._string == "class Knife")
 	{
-
+		if (GlobalParameter::rightSide)
+		{
+			if (GlobalParameter::upSide)
+			{
+				//右上
+				weapon->weaponSprite->setPosition(30, 0);
+				weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 1));
+			}
+			else if (GlobalParameter::downSide)
+			{
+				//右下
+				weapon->weaponSprite->setPosition(20, -30);
+				weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 7));
+			}
+			else
+			{
+				//仅朝右
+				weapon->weaponSprite->setPosition(30, -20);
+				weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin()));
+			}
+		}
+		else if (GlobalParameter::leftSide)
+		{
+			if (GlobalParameter::upSide)
+			{
+				//左上
+				weapon->weaponSprite->setPosition(-30, 0);
+				weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 3));
+			}
+			else if (GlobalParameter::downSide)
+			{
+				//左下
+				weapon->weaponSprite->setPosition(-20, -30);
+				weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 5));
+			}
+			else
+			{
+				//仅朝左
+				weapon->weaponSprite->setPosition(-20, -20);
+				weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 4));
+			}
+		}
+		else
+		{
+			if (GlobalParameter::upSide)
+			{
+				//仅朝上
+				if (GlobalParameter::imageRightSide)
+				{
+					weapon->weaponSprite->setPosition(20, 0);
+					weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 2));
+				}
+				else
+				{
+					weapon->weaponSprite->setPosition(-20, 0);
+					weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 2));
+				}
+			}
+			else
+			{
+				//仅朝下
+				if (GlobalParameter::imageRightSide)
+				{
+					weapon->weaponSprite->setPosition(20, -30);
+					weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 6));
+				}
+				else
+				{
+					weapon->weaponSprite->setPosition(-20, -30);
+					weapon->weaponSprite->setSpriteFrame(*(weapon->weaponSpriteVec.begin() + 6));
+				}
+			}
+		}
 	}
 }

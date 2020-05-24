@@ -3,6 +3,7 @@
 #include "MoveController.h"
 #include "editor-support/cocostudio/CCSGUIReader.h"
 #include "ui/CocosGUI.h"
+#include "Knife.h"
 
 USING_NS_CC;
 
@@ -86,14 +87,19 @@ Hero* SafeRoomScene::addHero(TMXTiledMap* map) {
 	mPlayer->setSafeRoomTiledMap(map);
 
 	MoveController* move = MoveController::create();
-	ShootController* shoot = ShootController::create();
+	
 	
 
 	mPlayer->setController(move);
 
 	//添加主角初始武器
+	ShootController* shoot = ShootController::create();
 	Gun* gun = new Gun(shoot, 3, "普通的枪支");
 	mPlayer->setWeapon(gun);
+	//HitController* hitContro = HitController::create();
+	//Knife* knife = new Knife(hitContro, 3, "匕首");
+	//mPlayer->setWeapon(knife);
+
 	
 	TMXObjectGroup* heroGroup = map->getObjectGroup("hero");
 	ValueMap heroPointMap = heroGroup->getObject("heroDir");

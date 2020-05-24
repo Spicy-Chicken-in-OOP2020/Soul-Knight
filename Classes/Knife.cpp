@@ -1,0 +1,25 @@
+#include "Knife.h"
+Knife::Knife(HitController* hitController, int attackNum, String name) :Weapon(attackNum, name)
+{
+	this->hitController = hitController;
+
+	this->addChild(hitController);
+
+	this->weaponSprite->setPosition(20, -20);
+
+	//¶ÁÈ¡Í¼Ïñ
+	SpriteFrameCache* frameCache = SpriteFrameCache::getInstance();
+	frameCache->addSpriteFramesWithFile("Knife.plist", "Knife.png");
+
+	int iFrameNum = 8;
+	SpriteFrame* frame = NULL;
+
+	for (int i = 0; i < iFrameNum; i++)
+	{
+		frame = frameCache->getSpriteFrameByName(StringUtils::format("Knife%d.png", i));
+		weaponSpriteVec.pushBack(frame);
+	}
+
+	//ÉèÖÃ³õÊ¼Í¼Ïñ
+	this->weaponSprite->setSpriteFrame(*(weaponSpriteVec.begin()));
+}
