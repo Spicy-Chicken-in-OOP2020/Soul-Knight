@@ -69,7 +69,7 @@ void Monster::move() {
 	int posY = 1000 * _moveDirSpeed[indexDir][1];
 
 	MoveBy* moveBy = MoveBy::create(
-		sqrt(posX*posX + posY + posY) / getMovingSpeed(),
+		sqrt(posX*posX + posY*posY) / getMovingSpeed(),
 		Point(posX, posY));
 
 	this->runAction(moveBy);

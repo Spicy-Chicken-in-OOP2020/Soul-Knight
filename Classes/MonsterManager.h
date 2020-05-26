@@ -21,8 +21,7 @@ public:
 
 	void createMonsters(int curLevel);/*创建怪物*/
 
-	Vector<Monster*> getMonsterList();/*获取怪物列表*/
-
+	Vector<Monster*>& getMonsterList();/*获取怪物列表*/
 private:
 	/*怪物波数*/
 	int _monsterTimes;
@@ -30,7 +29,6 @@ private:
 	Vector<Monster*> _monsterList;
 
 	void showMonster(float dt);/*检查是否有新怪物出场*/
-
 };
 
 

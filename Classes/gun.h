@@ -2,7 +2,7 @@
 #define _GUN_H__
 
 #include "Weapon.h"
-#include "ShootController.h"
+class ShootController;
 
 class Gun :public Weapon
 {

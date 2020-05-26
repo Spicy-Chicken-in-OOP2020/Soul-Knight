@@ -309,6 +309,16 @@ void Hero::setWeapon(Weapon *weapon)
 	}
 }
 
+//移除当前武器
+Weapon* Hero::removeWeapon()
+{
+	//移除当前武器
+	this->weapon->removeFromParentAndCleanup(true);
+	Weapon* oldWeapon = this->weapon;
+	this->weapon = nullptr;
+	return oldWeapon;
+}
+
 void Hero::setHeroRun(bool rightSide)
 {
 	if (rightSide)

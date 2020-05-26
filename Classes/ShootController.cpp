@@ -1,5 +1,7 @@
 #include "ShootController.h"
 #include "Hero.h"
+#include "SafeRoomScene.h"
+
 bool ShootController::init()
 {
 	//初始化状态
@@ -17,7 +19,9 @@ bool ShootController::init()
 		//加入子层中
 		//this->addChild(bullet);  
 		//直接将子弹加入场景中
-		GlobalParameter::mapNow->getParent()->addChild(bullet);
+		
+		GlobalParameter::mapNow->getParent()->addChild(bullet,11);
+		//SafeRoomScene::createScene()->addChild(bullet);
 	}
 
 	return true;
@@ -62,7 +66,12 @@ void ShootController::bulletUpdate(float dt)
 				//设置可见性
 				bulletList[i]->setActive(true);
 				//初始发射位置
+				//Point shootPosition = hero->getPosition();
 				Point shootPosition = hero->getPosition();
+				/*
+				Point posLyaer = hero->getParent()->getPosition();
+				shootPosition.x += posLyaer.x;
+				shootPosition.y += posLyaer.y;*/
 				//为了让子弹与枪支口重叠的位置修正
 				if (GlobalParameter::rightSide)
 				{

@@ -27,7 +27,7 @@ bool MonsterManager::initWithLevel(int curLevel) {
 	return true;
 }
 
-Vector<Monster*> MonsterManager::getMonsterList() {
+Vector<Monster*>& MonsterManager::getMonsterList() {
 	return _monsterList;
 }
 

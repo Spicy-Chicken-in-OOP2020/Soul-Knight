@@ -1,4 +1,6 @@
 #include "Gun.h"
+#include "ShootController.h"
+
 Gun::Gun(ShootController* shootController, int attackNum, String name) :Weapon(attackNum, name)
 {
 	this->shootController = shootController;

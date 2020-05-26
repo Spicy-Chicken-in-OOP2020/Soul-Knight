@@ -1,5 +1,5 @@
 #include "SpikeWeed.h"
-
+#include "SafeRoomScene.h"
 SpikeWeed::SpikeWeed()
 {
 	changeTime = 7.0f;
@@ -44,8 +44,11 @@ void SpikeWeed::setSprite()
 	this->spikeSprite = Sprite::create();
 	this->spikeSprite->setSpriteFrame(*frameVec.begin());
 	this->addChild(spikeSprite);
+
 	Size size = spikeSprite->getContentSize();
 	this->setContentSize(size);
+	this->setAnchorPoint(Point(0, 0));
+
 	frameVec.reverse();
 }
 
@@ -53,6 +56,8 @@ void SpikeWeed::spikeUpdate(float dt)
 {
 	//停止
 	this->unschedule(schedule_selector(SpikeWeed::spikeUpdate));
+	/*碰撞事件*/
+	this->scheduleUpdate();
 
 	//转变动画
 	Animation* animation = Animation::createWithSpriteFrames(frameVec);
@@ -70,8 +75,8 @@ void SpikeWeed::spikeUpdate(float dt)
 		//创建一个回调函数
 		CallFunc* callFunc = CallFunc::create(
 			[&]() {
-			this->setIsStabbing(false);
-			this->schedule(schedule_selector(SpikeWeed::spikeUpdate), this->changeTime);
+				this->setIsStabbing(false);
+				this->schedule(schedule_selector(SpikeWeed::spikeUpdate), this->changeTime);
 		}
 		);
 
@@ -88,8 +93,8 @@ void SpikeWeed::spikeUpdate(float dt)
 		//创建一个回调函数
 		CallFunc* callFunc = CallFunc::create(
 			[&]() {
-			this->setIsStabbing(true);
-			this->schedule(schedule_selector(SpikeWeed::spikeUpdate), this->changeTime);
+				this->setIsStabbing(true);
+				this->schedule(schedule_selector(SpikeWeed::spikeUpdate), this->changeTime);
 		}
 		);
 
@@ -103,8 +108,15 @@ void SpikeWeed::spikeUpdate(float dt)
 
 void SpikeWeed::update(float dt)
 {
-	Point position = this->getPosition();
-
 	//判断是否与主角发生碰撞
-	Point heroPosition;
+	auto hero = SafeRoomScene::_hero;
+
+	if (hero != nullptr) {
+		static int i = 0;
+		if (isStabbing&&hero->getBoundingBox().intersectsRect(this->getBoundingBox())) {
+			log("stab  me ! %d", i++);
+			this->unscheduleUpdate();
+			return;
+		}
+	}
 }

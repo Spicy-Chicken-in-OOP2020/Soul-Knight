@@ -8,6 +8,8 @@
 #include "ui/CocosGUI.h"
 #include "GlobalParameter.h"
 #include "Gun.h"
+#include "ShootController.h"
+
 USING_NS_CC;
 using namespace cocos2d::ui;
 using namespace cocostudio;
@@ -64,6 +66,8 @@ public:
 
 	//设置武器
 	void setWeapon(Weapon* weapon);
+	//移除当前武器
+	Weapon* removeWeapon();
 
 	//设置主角朝向
 	void setHeroRun(bool rightSide);

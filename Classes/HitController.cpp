@@ -11,7 +11,7 @@ bool HitController::init()
 		Sprite* sprite = Sprite::create("KnightImage.png");
 		actionSpriteVec[i] = sprite;
 		actionSpriteRun[i] = false;
-		GlobalParameter::mapNow->getParent()->addChild(sprite);
+		GlobalParameter::mapNow->getParent()->addChild(sprite,11);
 		sprite->setVisible(false);
 	}
 
@@ -47,7 +47,7 @@ void HitController::hitUpdate(float dt)
 		//从spriteVec中取出一个没有被使用的
 		Sprite* actionSprite = nullptr;
 
-		int index;
+		static int index;
 
 		for (index = 0; index < MAX_IMAGE_SPRITE_NUM; index++)
 		{
