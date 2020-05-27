@@ -21,7 +21,7 @@ private:
 
 public:
 	//构造函数
-	Bullet();
+	Bullet(int numBullet);
 	virtual bool init();
 	//发射子弹
 	void shoot(Point position);
@@ -37,5 +37,7 @@ public:
 	void update(float dt);
 	//获得绑定的图像
 	Sprite* getBindSprite();
+	//子弹编号
+	int numBullet;
 };
 #endif // !_BULLET_H__

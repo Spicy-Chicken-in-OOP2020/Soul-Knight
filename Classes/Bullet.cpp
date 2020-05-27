@@ -1,7 +1,7 @@
 #include "Bullet.h"
 #include "SafeRoomScene.h"
 //构造函数
-Bullet::Bullet()
+Bullet::Bullet(int numBullet):numBullet(numBullet)
 {
 	this->init();
 }
@@ -15,7 +15,7 @@ bool Bullet::init()
 	log("Bullet Created;");
 
 	//绑定图片
-	Sprite* newSprite = Sprite::create("bullet_6.png");
+	Sprite* newSprite = Sprite::create(StringUtils::format("bullet_%d.png",numBullet));
 	this->bindSprite(newSprite);
 	//设置运动状态
 	this->setActive(false);

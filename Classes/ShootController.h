@@ -14,7 +14,8 @@ public:
 	CREATE_FUNC(ShootController);
 	virtual bool init();
 	virtual void bulletUpdate(float dt);
-
+	//Éä»÷¿ØÖÆÆ÷±àºÅ
+	int numShootController;
 private:
 	//ÊÇ·ñÉä»÷×´Ì¬
 	bool isShot;

@@ -14,7 +14,7 @@ bool ShootController::init()
 	Bullet*bullet = NULL;
 	for (int i = 0; i < MAX_BULLET_NUM; i++)
 	{
-		bullet = new Bullet;
+		bullet = new Bullet(1);
 		bulletList[i] = bullet;
 		//加入子层中
 		//this->addChild(bullet);  
