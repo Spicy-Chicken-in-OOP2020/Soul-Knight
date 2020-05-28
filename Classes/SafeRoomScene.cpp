@@ -97,7 +97,7 @@ void SafeRoomScene::addMap() {
 		layer->addChild(spikeweed,2);
 	}
 
-	Items* item = Items::createItems(GUN_TAG, GlobalParameter::hero->getPosition());
+	Items* item = Items::createItems(QUICKGUN_TAG, GlobalParameter::hero->getPosition());
 	layer->addChild(item, 2);
 	
 	//_safeRoomScene->addChild(layer, 1);

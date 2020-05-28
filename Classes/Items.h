@@ -12,6 +12,7 @@ USING_NS_CC;
 #define JB_ADD_NUM 1
 #define KNIFE_TAG 5
 #define GUN_TAG 6
+#define QUICKGUN_TAG 7
 
 class Items:public Node{
 private:

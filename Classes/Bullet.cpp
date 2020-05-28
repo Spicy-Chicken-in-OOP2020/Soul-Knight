@@ -30,6 +30,10 @@ void Bullet::shoot(Point position)
 	//获取初始发射位置
 	this->setPosition(position);
 
+	//旋转图片角度
+
+
+
 	//设定最终地点
 	if (GlobalParameter::rightSide)
 		finalX = position.x + 10000;

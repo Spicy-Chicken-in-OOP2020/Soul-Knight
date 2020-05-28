@@ -312,6 +312,9 @@ void Hero::setWeapon(Weapon *weapon)
 //移除当前武器
 Weapon* Hero::removeWeapon()
 {
+	//判断是否持有枪支
+	if (this->weapon == nullptr)
+		return nullptr;
 	//移除当前武器
 	this->weapon->removeFromParentAndCleanup(true);
 	Weapon* oldWeapon = this->weapon;
@@ -366,6 +369,9 @@ void Hero::setHeroStill(bool rightSide)
 
 void Hero::update(float dt)
 {
+	//判断是否持有枪支
+	if (this->weapon == nullptr)
+		return;
 	//获取武器样式
 	CCString weaponType = typeid(*(this->weapon)).name();
 	if (weaponType._string == "class Gun")

@@ -2,6 +2,7 @@
 #include "StartScene.h"
 #include "HelloWorldScene.h"
 #include "SafeRoomScene.h"
+#include "testScene.h"
 SceneManager* SceneManager::_sceneManager = nullptr;
 
 SceneManager* SceneManager::getInstance() {
@@ -39,6 +40,9 @@ void SceneManager::changeScene(EnumSceneType sceneType) {
 	case WinScene:
 		break;
 		/*´ýÀ©Õ¹*/
+	case testScene:
+		scene = testScene::createScene();
+		break;
 	}
 
 	if (!scene) {

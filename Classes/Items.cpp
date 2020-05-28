@@ -90,6 +90,14 @@ void Items::effectOfItems(int itemsTag) {
 		GlobalParameter::hero->setWeapon(gun);
 		break;
 	}
+	case QUICKGUN_TAG:
+	{
+		//¶ªÆúÎäÆ÷
+		this->throwWeapon();
+		//½«ÎäÆ÷ÉèÖÃÎª³å·æÇ¹
+		
+		break;
+	}
 	}
 }
 

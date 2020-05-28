@@ -12,6 +12,7 @@ public:
 		SafeRoomScene,
 		TollgateScene,
 		WinScene,
+		testScene
 	};
 
 	/*获取场景管理器对象,单例类*/
