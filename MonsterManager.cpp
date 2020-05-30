@@ -1,6 +1,7 @@
 #include "MonsterManager.h"
-#include"Monster.h"
-MonsterManager::MonsterManager():_monsterTimes(0) {
+#include "SafeRoomScene.h"
+
+MonsterManager::MonsterManager() :_monsterTimes(0) {
 
 }
 
@@ -22,12 +23,14 @@ MonsterManager* MonsterManager::createMonsterManagerWithLevel(int curLevel) {
 }
 
 bool MonsterManager::initWithLevel(int curLevel) {
+
+	
 	/*更新怪物波数*/
-	this->schedule(schedule_selector(MonsterManager::showMonster), 0);
+	this->schedule(schedule_selector(MonsterManager::showMonster), 1);
 	return true;
 }
 
-Vector<Monster*> MonsterManager::getMonsterList() {
+Vector<Monster*>& MonsterManager::getMonsterList() {
 	return _monsterList;
 }
 
@@ -36,25 +39,47 @@ void MonsterManager::createMonsters(int curLevel) {
 	Monster* monster = nullptr;
 	Sprite* sprite = nullptr;
 
-	for (int i = 0; i < MONSTER_NUM; ++i) {
-		monster = Monster::create();
-		monster->bindSprite(Sprite::create("boss.png"));
-		monster->setStartPoint();
+	TMXObjectGroup* monsterStartPointGroup = SafeRoomScene::_safeRoomMap->getObjectGroup("monster_1");
+	ValueMap monsterStartPoint;
 
+	int monsterNo = 1;
+	while ((monsterStartPoint = monsterStartPointGroup->getObject(StringUtils::format("monster%d", monsterNo))).size()) {
+		log("A monster is created !");
+		++monsterNo;
+
+		/*monster起始点*/
+		float X = monsterStartPoint.at("x").asFloat();
+		float Y = monsterStartPoint.at("y").asFloat();
+
+		/*monster*/
+		monster = Monster::create();
+		monster->bindSprite(Sprite::create("Knight1Right.png"));
+		
+		monster->settBirthPlace(Point(X, Y));
+
+		monster->setPosition(X, Y);
+		this->addChild(monster);
+		/*出场动画*/
+		monster->birthAnimate();
 		_monsterList.pushBack(monster);
+
 	}
+
 }
 
 void MonsterManager::showMonster(float dt) {
-	if (_monsterList.size() == 0&&_monsterTimes<FRESH_TIMES) {
+	if (_monsterList.size() == 0 && _monsterTimes < FRESH_TIMES) {
 		++_monsterTimes;
 		createMonsters(_monsterTimes);
 	}
 	else {
-		for (auto monster : _monsterList)
-			if (monster->isDead())
-				_monsterList.eraseObject(monster);
-			else
-				monster->move();
+		for (int i=0;i<_monsterList.size();++i)
+			if (_monsterList. at(i)&& _monsterList.at(i)->isDead()) {
+				_monsterList.at(i)->removeFromParentAndCleanup(true);
+				_monsterList.eraseObject(_monsterList.at(i), false);
+			}
+			/*else if (_monsterList.at(i)) {
+				_monsterList.at(i)->update(dt);
+			}*/
 	}
 }
