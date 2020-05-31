@@ -1,6 +1,7 @@
 ﻿#include "Hero.h"
 #include "Knife.h"
 #include<typeinfo>
+#include "QuickGun.h"
 Hero::Hero() :weapon(nullptr)
 {
 	//设定初值
@@ -56,8 +57,6 @@ bool Hero::init(Sprite * sprite) {
 	}
 
 	this->_sprite->setSpriteFrame(*(rightSpriteVec.begin() + 1));
-
-	
 
 	return true;
 }
@@ -211,25 +210,25 @@ void Hero::deadResult() {
 
 }
 
-void Hero::bindHp(LoadingBar* hpBar, Label* hpLabel, Label* hpMaxLabel)
+void Hero::bindHp(LoadingBar* hpBar, Text* hpLabel, Text* hpMaxLabel)
 {
-	//_hpLoadingBar = hpBar;
-	//_hpLabel = hpLabel;
-	//_hpMaxLabel = hpMaxLabel;
+	_hpLoadingBar = hpBar;
+	_hpLabel = hpLabel;
+	_hpMaxLabel = hpMaxLabel;
 }
 
-void Hero::bindMp(LoadingBar* mpBar, Label* mpLabel, Label* mpMaxLabel)
+void Hero::bindMp(LoadingBar* mpBar, Text* mpLabel, Text* mpMaxLabel)
 {
-	//_mpLoadingBar = mpBar;
-	//_mpLabel = mpLabel;
-	//_mpMaxLabel = mpMaxLabel;
+	_mpLoadingBar = mpBar;
+	_mpLabel = mpLabel;
+	_mpMaxLabel = mpMaxLabel;
 }
 
-void Hero::bindDefense(LoadingBar* defenseBar, Label* defenseLabel, Label* defenseMaxLabel)
+void Hero::bindDefense(LoadingBar* defenseBar, Text* defenseLabel, Text* defenseMaxLabel)
 {
-	//_defenseLoadingBar = defenseBar;
-	//_defenseLabel = defenseLabel;
-	//_defenseMaxLabel = defenseMaxLabel;
+	_defenseLoadingBar = defenseBar;
+	_defenseLabel = defenseLabel;
+	_defenseMaxLabel = defenseMaxLabel;
 }
 
 void Hero::setMp(int mpValue) {
@@ -246,9 +245,9 @@ void Hero::setMpMax(int mpMaxValue)
 }
 
 void Hero::setHp(int hpValue) {
-	//sethp(hpValue);
-	//_hpLoadingBar->setPercent(hpValue * 100 / gethpMax());
-	//_hpLabel->setString(StringUtils::format("%d", hpValue));
+	sethp(hpValue);
+	_hpLoadingBar->setPercent(hpValue * 100 / gethpMax());
+	_hpLabel->setString(StringUtils::format("%d", hpValue));
 }
 
 void Hero::setHpMax(int hpMaxValue)
@@ -283,9 +282,8 @@ void Hero::defenseAutoAdd(float dt)
 		this->setDefense(this->getdefense() + 1);
 	log("Defense is added auto");
 }
-
 //设置武器
-void Hero::setWeapon(Weapon *weapon)
+void Hero::setWeapon(Weapon* weapon)
 {
 	//加入子类中
 	this->addChild(weapon);
@@ -294,7 +292,7 @@ void Hero::setWeapon(Weapon *weapon)
 
 	CCString weaponType = typeid(*weapon).name();
 	//确认武器类型
-	if (weaponType._string=="class Gun")
+	if (weaponType._string == "class Gun")
 	{
 		//类型转换
 		Gun* gun = (Gun*)weapon;
@@ -306,6 +304,13 @@ void Hero::setWeapon(Weapon *weapon)
 	{
 		//类型转换
 		Knife* knife = (Knife*)weapon;
+		knife->hitController->setMyControlListener(this);
+	}
+	else if (weaponType._string == "class QuickGun")
+	{
+		//类型转换
+		QuickGun* quickgun = (QuickGun*)weapon;
+		quickgun->shootController->setMyControlListener(this);
 	}
 }
 
@@ -327,7 +332,7 @@ void Hero::setHeroRun(bool rightSide)
 	if (rightSide)
 	{
 		this->_sprite->setSpriteFrame(*(rightSpriteVec.begin() + 1));
-		
+
 		//组合动画
 		Animation* rightAnimation = Animation::createWithSpriteFrames(rightSpriteVec);
 		rightAnimation->setLoops(-1);
@@ -356,14 +361,14 @@ void Hero::setHeroStill(bool rightSide)
 	this->_sprite->stopAllActions();
 	if (rightSide)
 	{
-		
+
 		this->_sprite->setSpriteFrame(*(rightSpriteVec.begin() + 1));
 
 	}
 	else
 	{
 		this->_sprite->setSpriteFrame(*(leftSpriteVec.begin() + 1));
-		
+
 	}
 }
 
@@ -374,7 +379,7 @@ void Hero::update(float dt)
 		return;
 	//获取武器样式
 	CCString weaponType = typeid(*(this->weapon)).name();
-	if (weaponType._string == "class Gun")
+	if (weaponType._string == "class Gun" || weaponType._string == "class QuickGun")
 	{
 		if (GlobalParameter::rightSide)
 		{

@@ -24,6 +24,7 @@
 
 #include "AppDelegate.h"
 #include "SceneManager.h"
+#include "TollgateScene.h"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -118,6 +119,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     SceneManager::getInstance()->changeScene(SceneManager::SafeRoomScene);
+
+    
 
     return true;
 }

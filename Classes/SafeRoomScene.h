@@ -22,7 +22,7 @@ public:
 	/*暂停按钮回调*/
 	void pauseButton(Ref*, TouchEventType type);
 
-	TMXTiledMap* _safeRoomMap;
+	static TMXTiledMap* _safeRoomMap;
 
 	/*英雄*/
 	static Hero* _hero;
@@ -36,6 +36,7 @@ public:
 
 	/*地刺*/
 	Vector< SpikeWeed*> _spikeList;
+
 };
 
 #endif

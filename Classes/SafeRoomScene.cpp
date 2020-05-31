@@ -11,11 +11,15 @@
 #include "Gun.h"
 #include "HitController.h"
 #include "Knife.h"
+#include "QuickGun.h"
 
 USING_NS_CC;
 
 using namespace cocos2d::ui;
 using namespace cocostudio;
+
+TMXTiledMap* SafeRoomScene::_safeRoomMap = nullptr;
+
 MonsterManager* SafeRoomScene::_monsterManager = nullptr;
 
 PauseLayer* SafeRoomScene::_pauseLayer = nullptr;
@@ -30,7 +34,9 @@ Scene* SafeRoomScene::createScene() {
 		return _safeRoomScene;
 
 	_safeRoomScene = SafeRoomScene::create();
+	
 	_safeRoomScene->retain();
+	
 	
 	/*添加地图*/
 	_safeRoomScene->addMap();
@@ -38,7 +44,6 @@ Scene* SafeRoomScene::createScene() {
 	/*左上角*/
 	auto layer = _safeRoomScene->mainUiInit(_safeRoomScene->_hero);
 	_safeRoomScene->addChild(layer,2);
-	
 
 	
 
@@ -46,7 +51,6 @@ Scene* SafeRoomScene::createScene() {
 	_pauseLayer = PauseLayer::createPauseLayer();
 	_pauseLayer->setVisible(false);
 	_safeRoomScene->addChild(_pauseLayer, 3);
-
 
 	return _safeRoomScene;
 }
@@ -62,7 +66,7 @@ void SafeRoomScene::addMap() {
 	auto layer = Layer::create();
 	_safeRoomScene->addChild(layer, 1);
 	_hero = nullptr;
-	_safeRoomMap = TMXTiledMap::create("MainMap.tmx");
+	_safeRoomMap = TMXTiledMap::create("soul_knight_1_3.tmx");
 	//设定当前所在地图
 	GlobalParameter::mapNow = _safeRoomMap;
 	layer->addChild(_safeRoomMap,1);
@@ -73,34 +77,8 @@ void SafeRoomScene::addMap() {
 	_monsterManager = MonsterManager::createMonsterManagerWithLevel(1);
 	layer->addChild(_monsterManager,3);
 
-	//读取地刺层
-	TMXObjectGroup* spikeGroup = _safeRoomMap->getObjectGroup("spikeWeed");
-	//获取所有地刺
-	ValueMap spikePointVec;
-
-	int spikeNum = 0;
-
-	//当可以继续读取时
-	while ((spikePointVec = spikeGroup->getObject(StringUtils::format("spikeWeed%d", spikeNum + 1))).size())
-	{
-		log("A spikeWeed is loading!");
-		spikeNum++;
-
-		//在该位置放置地刺
-		float spikeX = spikePointVec.at("x").asFloat();
-		float spikeY = spikePointVec.at("y").asFloat();
-
-		//生成一个新的地刺
-		SpikeWeed* spikeweed = new SpikeWeed();
-		spikeweed->setPosition(Point(spikeX, spikeY));
-		_spikeList.pushBack(spikeweed);
-		layer->addChild(spikeweed,2);
-	}
-
-	Items* item = Items::createItems(QUICKGUN_TAG, GlobalParameter::hero->getPosition());
+	Items* item = Items::createItems(BS_TAG, _hero->getPosition());
 	layer->addChild(item, 2);
-	
-	//_safeRoomScene->addChild(layer, 1);
 }
 
 Hero* SafeRoomScene::addHero(TMXTiledMap* map, Layer* layer) {
@@ -113,12 +91,11 @@ Hero* SafeRoomScene::addHero(TMXTiledMap* map, Layer* layer) {
 
 	_hero = Hero::create(playerSprite);
 	_hero->setPosition(Point(100, visibleSize.height / 2));
-	layer->addChild(_hero,3);
+	layer->addChild(_hero,4);
 
 	_hero->setSafeRoomTiledMap(map);
 
 	MoveController* move = MoveController::create();
-
 
 
 	_hero->setController(move);
@@ -128,18 +105,36 @@ Hero* SafeRoomScene::addHero(TMXTiledMap* map, Layer* layer) {
 	ShootController* shoot = ShootController::create();
 	Gun* gun = new Gun(shoot, 3, "普通的枪支");
 	_hero->setWeapon(gun);*/
-	HitController* hitContro = HitController::create();
+	/*HitController* hitContro = HitController::create();
 	Knife* knife = new Knife(hitContro, 3, "匕首");
-	_hero->setWeapon(knife);
+	_hero->setWeapon(knife);*/
+	QuickGun* quickGun = new QuickGun(3, "冲锋枪");
+	_hero->setWeapon(quickGun);
+
 
 
 	TMXObjectGroup* heroGroup = map->getObjectGroup("hero");
-	ValueMap heroPointMap = heroGroup->getObject("heroDir");
+	ValueMap heroPointMap = heroGroup->getObject("heroStart");
 
 	float heroX = heroPointMap.at("x").asFloat();
 	float heroY = heroPointMap.at("y").asFloat();
 
 	_hero->setPosition(Point(heroX, heroY));
+
+	//TMXObjectGroup* monsterStartPointGroup = SafeRoomScene::_safeRoomMap->getObjectGroup("monster_1");
+	//ValueMap monsterStartPoint;
+	//monsterStartPoint = monsterStartPointGroup->getObject(StringUtils::format("monster%d", 1));
+
+	//	/*monster起始点*/
+	//	float X = monsterStartPoint.at("x").asFloat();
+	//	float Y = monsterStartPoint.at("y").asFloat();
+
+	//	_hero->setPosition(X, Y);
+
+	Items* item = Items::createItems(GUN_TAG, _hero->getPosition());
+
+	layer->addChild(item, 2);
+
 
 	//世界主角
 	GlobalParameter::hero = _hero;
@@ -167,17 +162,19 @@ Layer* SafeRoomScene::mainUiInit(Hero* hero){
 
 	//获取主角HP,护甲,MP
 	auto playerHpUI = (LoadingBar*)Helper::seekWidgetByName(mainUI, "PlayerHpUI");
-	auto playerHpLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryHp");
-	auto playerHpMaxLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryHpMax");
+	auto playerHpLabel = (Text*)Helper::seekWidgetByName(mainUI, "BoundarayHpNow");
+	auto playerHpMaxLabel = (Text*)Helper::seekWidgetByName(mainUI, "BoundarayHpMax");
 	hero->bindHp(playerHpUI, playerHpLabel, playerHpMaxLabel);
 	auto playerDefendenseUI = (LoadingBar*)Helper::seekWidgetByName(mainUI, "PlayerDefendenseUI");
-	auto playerDefendenseLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryDefendense");
-	auto playerDefendenseMaxLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryDefendenseMax");
+	auto playerDefendenseLabel = (Text*)Helper::seekWidgetByName(mainUI, "BoundarayDefendenseNow");
+	auto playerDefendenseMaxLabel = (Text*)Helper::seekWidgetByName(mainUI, "BoundarayDefendenseMax");
 	hero->bindDefense(playerDefendenseUI, playerDefendenseLabel, playerDefendenseMaxLabel);
 	auto playerMpUI = static_cast<LoadingBar*>(Helper::seekWidgetByName(mainUI, "PlayerMpUI"));
-	auto playerMpLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryMp");
-	auto playerMpMaxLabel = (Label*)Helper::seekWidgetByName(mainUI, "BoundaryMpMax");
+	auto playerMpLabel = (Text*)Helper::seekWidgetByName(mainUI, "BoundarayMpNow");
+	auto playerMpMaxLabel = (Text*)Helper::seekWidgetByName(mainUI, "BoundarayMpMax");
 	hero->bindHp(playerMpUI, playerMpLabel, playerMpMaxLabel);
 
 	return layer;
 }
+
+

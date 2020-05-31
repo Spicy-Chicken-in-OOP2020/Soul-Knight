@@ -7,7 +7,7 @@
 USING_NS_CC;
 
 #define FRESH_TIMES 4/*敌人刷新波数*/
-#define MONSTER_NUM 8/*每次刷新敌人数量*/
+
 
 
 class MonsterManager:public Node{
@@ -29,6 +29,8 @@ private:
 	Vector<Monster*> _monsterList;
 
 	void showMonster(float dt);/*检查是否有新怪物出场*/
+
+	
 };
 
 

@@ -2,10 +2,12 @@
 #define _BULLET_H__
 
 #include "GlobalParameter.h"
+class Monster;
 
 class Bullet :public Node
 {
 private:
+
 	//子弹状态
 	bool isActive;
 	//图片对象
@@ -19,12 +21,17 @@ private:
 	int finalX;
 	int finalY;
 
+	//子弹编号
+	int numBullet;
 public:
 	//构造函数
+	Bullet();//
+
 	Bullet(int numBullet);
 	virtual bool init();
 	//发射子弹
 	void shoot(Point position);
+	void shootForMonster(Point position,Monster* monster );
 	//设置子弹状态
 	void setActive(bool _isActive);
 	//获得子弹状态
@@ -37,7 +44,7 @@ public:
 	void update(float dt);
 	//获得绑定的图像
 	Sprite* getBindSprite();
-	//子弹编号
-	int numBullet;
+
+	
 };
 #endif // !_BULLET_H__

@@ -45,9 +45,9 @@ public:
 	virtual void deadResult();
 
 	/*血量、蓝、防御力进度条*/
-	void bindHp(LoadingBar* hpBar,Label* hpLabel,Label* hpMaxLabel);
-	void bindMp(LoadingBar* mpBar,Label* mpLabel,Label* mpMaxLabel);
-	void bindDefense(LoadingBar* defenseBar,Label* defenseLabel,Label* defenseMaxLabel);
+	void bindHp(LoadingBar* hpBar, Text* hpLabel, Text* hpMaxLabel);
+	void bindMp(LoadingBar* mpBar, Text* mpLabel, Text* mpMaxLabel);
+	void bindDefense(LoadingBar* defenseBar, Text* defenseLabel, Text* defenseMaxLabel);
 
 
 	/*也可用于初始化*/
@@ -89,12 +89,12 @@ private:
 	LoadingBar* _defenseLoadingBar;
 
 	/*UI数值*/
-	Label* _hpLabel;
-	Label* _hpMaxLabel;
-	Label* _defenseLabel;
-	Label* _defenseMaxLabel;
-	Label* _mpLabel;
-	Label* _mpMaxLabel;
+	Text* _hpLabel;
+	Text* _hpMaxLabel;
+	Text* _defenseLabel;
+	Text* _defenseMaxLabel;
+	Text* _mpLabel;
+	Text* _mpMaxLabel;
 
 	/*卡死我了*/
 	bool isStuck;

@@ -2,6 +2,7 @@
 #include "SafeRoomScene.h"
 #include "Knife.h"
 #include "gun.h"
+#include "QuickGun.h"
 Items::Items() :_sprite(nullptr) {
 
 };
@@ -85,8 +86,7 @@ void Items::effectOfItems(int itemsTag) {
 		//¶ªÆúÎäÆ÷
 		this->throwWeapon();
 		//½«ÎäÆ÷ÉèÖÃÎªÇ¹Ö§
-		ShootController* shootContro = ShootController::create();
-		Gun* gun = new Gun(shootContro, 3, "Ç¹Ö§");
+		Gun* gun = new Gun(3, "Ç¹Ö§");
 		GlobalParameter::hero->setWeapon(gun);
 		break;
 	}
@@ -95,6 +95,8 @@ void Items::effectOfItems(int itemsTag) {
 		//¶ªÆúÎäÆ÷
 		this->throwWeapon();
 		//½«ÎäÆ÷ÉèÖÃÎª³å·æÇ¹
+		QuickGun *quickGun = new QuickGun(2, "³å·æÇ¹");
+		GlobalParameter::hero->setWeapon(quickGun);
 		
 		break;
 	}
@@ -141,6 +143,11 @@ void Items::throwWeapon()
 	else if (weaponType._string == "class Knife")
 	{
 		Items* item = Items::createItems(KNIFE_TAG, GlobalParameter::hero->getPosition());
+		GlobalParameter::mapNow->getParent()->addChild(item, 2);
+	}
+	else if (weaponType._string == "class QuickGun")
+	{
+		Items* item = Items::createItems(QUICKGUN_TAG, GlobalParameter::hero->getPosition());
 		GlobalParameter::mapNow->getParent()->addChild(item, 2);
 	}
 }

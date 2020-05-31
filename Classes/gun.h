@@ -9,6 +9,8 @@ class Gun :public Weapon
 public:
 	//构造函数
 	Gun(ShootController* shootController, int attackNum, String name);
+
+	Gun(int attackNum, String name);
 	//射击管理器
 	ShootController* shootController;
 };

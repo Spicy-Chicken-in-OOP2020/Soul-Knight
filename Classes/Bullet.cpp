@@ -1,8 +1,16 @@
 #include "Bullet.h"
 #include "SafeRoomScene.h"
+#include "Monster.h"
+#include "Items.h"
 //构造函数
-Bullet::Bullet(int numBullet):numBullet(numBullet)
+Bullet::Bullet():numBullet(1){
+
+	this->init();
+}
+
+Bullet::Bullet(int numBullet) :numBullet(numBullet)
 {
+
 	this->init();
 }
 
@@ -15,7 +23,7 @@ bool Bullet::init()
 	log("Bullet Created;");
 
 	//绑定图片
-	Sprite* newSprite = Sprite::create(StringUtils::format("bullet_%d.png",numBullet));
+	Sprite* newSprite = Sprite::create(StringUtils::format("bullet_%d.png", numBullet));
 	this->bindSprite(newSprite);
 	//设置运动状态
 	this->setActive(false);
@@ -31,8 +39,6 @@ void Bullet::shoot(Point position)
 	this->setPosition(position);
 
 	//旋转图片角度
-
-
 
 	//设定最终地点
 	if (GlobalParameter::rightSide)
@@ -51,14 +57,46 @@ void Bullet::shoot(Point position)
 
 	//持续移动
 	MoveTo* moveTo = MoveTo::create(sqrt(
-		(finalX-position.x)*(finalX - position.x)+ 
-		(finalY - position.y)*(finalY - position.y))/speed,
+		(finalX - position.x) * (finalX - position.x) +
+		(finalY - position.y) * (finalY - position.y)) / speed,
 		Point(finalX, finalY));
 	this->runAction(moveTo);
 
 	//添加移动事件
 	this->scheduleUpdate();
 }
+void Bullet::shootForMonster(Point position, Monster* monster) {
+	log("This bullet is shot!");
+	//获取初始发射位置
+	this->setPosition(position);
+
+	//设定最终地点
+
+	if (monster->getright())
+		finalX = position.x + 10000;
+	else if (monster->getleft())
+		finalX = position.x - 10000;
+	else
+		finalX = position.x;
+
+	if (monster->getup())
+		finalY = position.y + 10000;
+	else if (monster->getdown())
+		finalY = position.y - 10000;
+	else
+		finalY = position.y;
+
+	//持续移动
+	MoveTo* moveTo = MoveTo::create(sqrt(
+		(finalX - position.x) * (finalX - position.x) +
+		(finalY - position.y) * (finalY - position.y)) / speed,
+		Point(finalX, finalY));
+	this->runAction(moveTo);
+
+	//添加移动事件
+	this->scheduleUpdate();
+}
+
 
 void Bullet::setActive(bool _isActive)
 {
@@ -84,7 +122,7 @@ bool Bullet::isArrive()
 	TMXLayer* collisionLayer = GlobalParameter::mapNow->getLayer("collision");
 
 	//获得坐标在地图中的格子位置
-	Point tiledPos(position.x / tileSize.width, (mapSize.height*tileSize.height - position.y) / tileSize.height);
+	Point tiledPos(position.x / tileSize.width, (mapSize.height * tileSize.height - position.y) / tileSize.height);
 
 	if (position.x < 0 || position.y < 0)
 	{
@@ -97,31 +135,34 @@ bool Bullet::isArrive()
 	int tiledGid = collisionLayer->getTileGIDAt(tiledPos);
 
 	//图块ID不为空，表示是障碍物
-	if (tiledGid !=0 )
+	if (tiledGid != 0)
 	{
 		return true;
-		
+
 	}
 
-	//判断是否碰到敌人
-	/*if (SafeRoomScene::_monsterManager != nullptr) {
-		auto monsterList = SafeRoomScene::_monsterManager->getMonsterList();
-		if (!monsterList.empty()) {
-			for (int i = 0; i < monsterList.size(); ++i) {
-
-				if (this->getBoundingBox().intersectsRect(monsterList.at(i)->getBoundingBox())) {
-					this->setVisible(false);
+	/*判断是否碰到敌人,别乱改*/
+	if (SafeRoomScene::_monsterManager != nullptr) {
+		Vector<Monster*>& monsterList = SafeRoomScene::_monsterManager->getMonsterList();
+		for(int i=0;i<monsterList.size();++i)
+			
+				if (HERO_BULLET == this->getTag() && this->getBoundingBox().intersectsRect(monsterList.at(i)->getBoundingBox())) {
+					log("monseter was  hurt !\n");
 					monsterList.at(i)->getHurt(1);
-				}
+					return true;
+				}		
+	}
 
-			}
-		}
-	}*/
+	if (MONSTER_BULLET == this->getTag() && this->getBoundingBox().intersectsRect(GlobalParameter::hero->getBoundingBox())) {
+		log("hero was hurt !\n");
+		GlobalParameter::hero->getHurt(1);
+		return true;
+	}
 
 	return false;
 }
 
-void Bullet::bindSprite(Sprite * sprite) {
+void Bullet::bindSprite(Sprite* sprite) {
 	//绑定图片
 	bulletSprite = sprite;
 	this->addChild(bulletSprite);
@@ -134,13 +175,6 @@ void Bullet::bindSprite(Sprite * sprite) {
 	this->setContentSize(size);
 	//设置焦点坐标
 	this->setAnchorPoint(Point(0, 0));
-
-	///*物理body以碰撞*/
-	//PhysicsBody* phyBody = PhysicsBody::createCircle(5);
-	//phyBody->setGravityEnable(false);
-
-	//sprite->setTag(2);//标识符
-	//sprite->setPhysicsBody(phyBody);
 }
 
 void Bullet::update(float dt)
@@ -176,8 +210,8 @@ void Bullet::update(float dt)
 		//创建一个回调函数
 		CallFunc* callFunc = CallFunc::create(
 			[&]() {
-			this->setActive(false);
-		}
+				this->setActive(false);
+			}
 		);
 
 		//组合动作
@@ -185,7 +219,7 @@ void Bullet::update(float dt)
 		//动作精灵执行动作
 		this->actionSprite->setVisible(true);
 		this->actionSprite->runAction(actions);
-		
+
 	}
 }
 
