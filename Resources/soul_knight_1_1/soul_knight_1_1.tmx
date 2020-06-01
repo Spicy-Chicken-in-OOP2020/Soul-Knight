@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="48" tileheight="48" infinite="0" nextlayerid="14" nextobjectid="33">
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="48" tileheight="48" infinite="0" nextlayerid="10" nextobjectid="6">
  <tileset firstgid="1" source="Outside_A4_1_1.tsx"/>
  <tileset firstgid="241" source="Outside_B_1_1.tsx"/>
  <tileset firstgid="497" source="TileB_1_1.tsx"/>
@@ -32,46 +32,5 @@
  <objectgroup id="7" name="hero">
   <object id="1" name="heroStart" x="4174" y="482.667" width="96" height="96"/>
   <object id="4" name="portal" x="2064" y="3886.67" width="96" height="96"/>
- </objectgroup>
- <objectgroup id="10" name="spikeWeed">
-  <object id="6" name="spikeWeed1" x="1969.33" y="528.667" width="48" height="48"/>
-  <object id="7" name="spikeWeed2" x="1920" y="528.667" width="48" height="48"/>
-  <object id="8" name="spikeWeed3" x="1922" y="477.333" width="48" height="48"/>
-  <object id="9" name="spikeWeed4" x="1921.33" y="430" width="48" height="48"/>
-  <object id="10" name="spikeWeed5" x="1920" y="382.667" width="48" height="48"/>
-  <object id="11" name="spikeWeed6" x="1969.33" y="384" width="48" height="48"/>
-  <object id="12" name="spikeWeed7" x="1968.67" y="334.667" width="48" height="48"/>
-  <object id="13" name="spikeWeed8" x="1920" y="334" width="48" height="48"/>
-  <object id="14" name="spikeWeed9" x="1870" y="333.333" width="48" height="48"/>
-  <object id="15" name="spikeWeed10" x="1822.67" y="334.667" width="48" height="48"/>
- </objectgroup>
- <objectgroup id="11" name="monster_2">
-  <object id="16" name="monster1" x="2110.67" y="2742.67" width="48" height="48"/>
-  <object id="17" name="monster2" x="2257.33" y="2884" width="48" height="48"/>
-  <object id="18" name="monster3" x="1584" y="2783.33" width="48" height="48"/>
-  <object id="19" name="monster4" x="1966" y="2975.33" width="48" height="48"/>
-  <object id="20" name="monster5" x="1583.33" y="2220.67" width="48" height="48"/>
-  <object id="21" name="monster6" x="1388" y="1923.33" width="48" height="48"/>
-  <object id="22" name="monster7" x="2064" y="1828" width="48" height="48"/>
-  <object id="23" name="monster8" x="2450.67" y="2304" width="48" height="48"/>
- </objectgroup>
- <objectgroup id="12" name="monster_1">
-  <object id="24" name="monster8" x="2207.33" y="191.333" width="48" height="48"/>
-  <object id="25" name="monster7" x="2604" y="245.333" width="48" height="48"/>
-  <object id="26" name="monster6" x="2396.67" y="382.667" width="48" height="48"/>
-  <object id="27" name="monster5" x="2686.67" y="719.333" width="48" height="48"/>
-  <object id="28" name="monster2" x="2064.67" y="679.333" width="48" height="48"/>
-  <object id="29" name="monster3" x="2257.33" y="911.333" width="48" height="48"/>
-  <object id="30" name="monster4" x="2920" y="570" width="48" height="48"/>
-  <object id="31" name="monster1" x="1771.33" y="808" width="48" height="48"/>
- </objectgroup>
- <objectgroup id="13" name="treasure">
-  <properties>
-   <property name="resouceChest" type="bool" value="false"/>
-   <property name="shop" type="bool" value="false"/>
-   <property name="silverChest" type="bool" value="false"/>
-   <property name="woodenChest" type="bool" value="false"/>
-  </properties>
-  <object id="32" name="treasure1" x="674.667" y="528" width="48" height="48"/>
  </objectgroup>
 </map>
