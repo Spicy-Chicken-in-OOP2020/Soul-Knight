@@ -232,19 +232,23 @@ void Hero::bindDefense(LoadingBar* defenseBar, Text* defenseLabel, Text* defense
 }
 
 void Hero::setMp(int mpValue) {
-	//setmp(mpValue);
-	//_mpLoadingBar->setPercent(mpValue * 100 / getmpMax());
-	//_mpLabel->setString(StringUtils::format("%d", mpValue));
+	if (mpValue > getmpMax())
+		mpValue = getmpMax();
+	setmp(mpValue);
+	_mpLoadingBar->setPercent(mpValue * 100 / getmpMax());
+	_mpLabel->setString(StringUtils::format("%d", mpValue));
 }
 
 void Hero::setMpMax(int mpMaxValue)
 {
-	//setmpMax(mpMaxValue);
-	//_mpLoadingBar->setPercent(getmp() * 100 / mpMaxValue);
-	//_mpMaxLabel->setString(StringUtils::format("%d", mpMaxValue));
+	setmpMax(mpMaxValue);
+	_mpLoadingBar->setPercent(getmp() * 100 / mpMaxValue);
+	_mpMaxLabel->setString(StringUtils::format("%d", mpMaxValue));
 }
 
 void Hero::setHp(int hpValue) {
+	if (hpValue > gethpMax())
+		hpValue = gethpMax();
 	sethp(hpValue);
 	_hpLoadingBar->setPercent(hpValue * 100 / gethpMax());
 	_hpLabel->setString(StringUtils::format("%d", hpValue));
@@ -252,22 +256,24 @@ void Hero::setHp(int hpValue) {
 
 void Hero::setHpMax(int hpMaxValue)
 {
-	//sethpMax(hpMaxValue);
-	//_hpLoadingBar->setPercent(gethp() * 100 / hpMaxValue);
-	//_hpMaxLabel->setString(StringUtils::format("%d", hpMaxValue));
+	sethpMax(hpMaxValue);
+	_hpLoadingBar->setPercent(gethp() * 100 / hpMaxValue);
+	_hpMaxLabel->setString(StringUtils::format("%d", hpMaxValue));
 }
 
 void Hero::setDefense(int defenseValue) {
-	//setdefense(defenseValue);
-	//_defenseLoadingBar->setPercent(defenseValue * 100 / getdefenseMax());
-	//_defenseLabel->setString(StringUtils::format("%d", defenseValue));
+	if (defenseValue > getdefenseMax())
+		defenseValue = getdefenseMax();
+	setdefense(defenseValue);
+	_defenseLoadingBar->setPercent(defenseValue * 100 / getdefenseMax());
+	_defenseLabel->setString(StringUtils::format("%d", defenseValue));
 }
 
 void Hero::setDefenseMax(int defenseMaxValue)
 {
-	//setdefenseMax(defenseMaxValue);
-	//_defenseLoadingBar->setPercent(getdefense() * 100 / defenseMaxValue);
-	//_defenseMaxLabel->setString(StringUtils::format("%d", defenseMaxValue));
+	setdefenseMax(defenseMaxValue);
+	_defenseLoadingBar->setPercent(getdefense() * 100 / defenseMaxValue);
+	_defenseMaxLabel->setString(StringUtils::format("%d", defenseMaxValue));
 }
 
 GameController* Hero::getMoveController()

@@ -52,6 +52,8 @@ Scene* SafeRoomScene::createScene() {
 	_pauseLayer->setVisible(false);
 	_safeRoomScene->addChild(_pauseLayer, 3);
 
+	
+	
 	return _safeRoomScene;
 }
 
@@ -77,7 +79,7 @@ void SafeRoomScene::addMap() {
 	_monsterManager = MonsterManager::createMonsterManagerWithLevel(1);
 	layer->addChild(_monsterManager,3);
 
-	Items* item = Items::createItems(BS_TAG, _hero->getPosition());
+	Items* item = Items::createItems(BAOXIANG_TAG, _hero->getPosition());
 	layer->addChild(item, 2);
 }
 
@@ -138,7 +140,7 @@ Hero* SafeRoomScene::addHero(TMXTiledMap* map, Layer* layer) {
 
 	//ÊÀ½çÖ÷½Ç
 	GlobalParameter::hero = _hero;
-
+	
 	return _hero;
 }
 
@@ -165,14 +167,14 @@ Layer* SafeRoomScene::mainUiInit(Hero* hero){
 	auto playerHpLabel = (Text*)Helper::seekWidgetByName(mainUI, "BoundarayHpNow");
 	auto playerHpMaxLabel = (Text*)Helper::seekWidgetByName(mainUI, "BoundarayHpMax");
 	hero->bindHp(playerHpUI, playerHpLabel, playerHpMaxLabel);
-	auto playerDefendenseUI = (LoadingBar*)Helper::seekWidgetByName(mainUI, "PlayerDefendenseUI");
+	auto playerDefendenseUI = (LoadingBar*)Helper::seekWidgetByName(mainUI, "PlayerDefendenseUI_0");
 	auto playerDefendenseLabel = (Text*)Helper::seekWidgetByName(mainUI, "BoundarayDefendenseNow");
 	auto playerDefendenseMaxLabel = (Text*)Helper::seekWidgetByName(mainUI, "BoundarayDefendenseMax");
 	hero->bindDefense(playerDefendenseUI, playerDefendenseLabel, playerDefendenseMaxLabel);
 	auto playerMpUI = static_cast<LoadingBar*>(Helper::seekWidgetByName(mainUI, "PlayerMpUI"));
 	auto playerMpLabel = (Text*)Helper::seekWidgetByName(mainUI, "BoundarayMpNow");
 	auto playerMpMaxLabel = (Text*)Helper::seekWidgetByName(mainUI, "BoundarayMpMax");
-	hero->bindHp(playerMpUI, playerMpLabel, playerMpMaxLabel);
+	hero->bindMp(playerMpUI, playerMpLabel, playerMpMaxLabel);
 
 	return layer;
 }

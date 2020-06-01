@@ -15,6 +15,7 @@ bool Items::init() {
 	if (!Node::init()) {
 		return false;
 	}
+
 	return true;
 }
 
@@ -28,8 +29,22 @@ Items* Items::createItems(int itemsTag, Point position) {
 	/*道具属性*/
 	items->setTag(itemsTag);
 
-	items->setContentSize(items->_sprite->getContentSize());
-	items->setAnchorPoint(Point(0, 0));
+	
+
+	/*宝箱类增大范围判定*/
+	if (items->getTag() == BAOXIANG_TAG)
+	{
+		Size size = items->_sprite->getContentSize();
+		size.width += 20;
+		size.height += 20;
+		items->setContentSize(size);
+		items->setAnchorPoint(Point(0, 0));
+	}
+	else
+	{
+		items->setContentSize(items->_sprite->getContentSize());
+		items->setAnchorPoint(Point(0, 0));
+	}
 
 	/*设置道具位置,从图层读取*/
 	items->setPosition(position);
@@ -52,7 +67,22 @@ void Items::keyBoard_k_register() {
 		case EventKeyboard::KeyCode::KEY_K:  //k
 			if (this->getBoundingBox().intersectsRect(SafeRoomScene::_hero->getBoundingBox())) {
 				effectOfItems(this->getTag());
-				this->removeFromParentAndCleanup(true);
+				{
+					//如果这个物品属于宝箱，则不需要回收，仅需更改图片即可
+					if (this->getTag()==BAOXIANG_TAG)
+					{
+						Sprite* newSprite = Sprite::create("Items_9.png");
+						this->_sprite->removeFromParentAndCleanup(true);
+						this->_sprite = newSprite;
+						this->addChild(this->_sprite);
+						//标记已完成替换
+						this->setTag(OPENED_BAOXIANG_TAG+0);
+					}
+					else if (this->getTag()!=OPENED_BAOXIANG_TAG+0)
+					{
+						this->removeFromParentAndCleanup(true);
+					}
+				}
 		}
 		}
 	};
@@ -64,11 +94,11 @@ void Items::keyBoard_k_register() {
 void Items::effectOfItems(int itemsTag) {
 	switch (itemsTag) {
 	case HP_ADD_TAG:
-		//SafeRoomScene::_hero->setHp(SafeRoomScene::_hero->gethp() + HP_ADD_NUM);
+		GlobalParameter::hero->setHp(GlobalParameter::hero->gethp() + HP_ADD_NUM);
 		log("hp add\n");
 		break;
 	case MP_ADD_TAG:
-		//SafeRoomScene::_hero->setMp(SafeRoomScene::_hero->getmp() + MP_ADD_NUM);
+		GlobalParameter::hero->setMp(GlobalParameter::hero->getmp() + MP_ADD_NUM);
 		log("mp add\n");
 		break;
 	case KNIFE_TAG:
@@ -100,6 +130,47 @@ void Items::effectOfItems(int itemsTag) {
 		
 		break;
 	}
+	case BAOXIANG_TAG:
+		//宝箱
+	{
+		//打开宝箱
+		//随机一把武器
+		double randomItem = CCRANDOM_0_1();
+		//确认种类
+		if (randomItem < 0.2f)
+		{
+			Items* item = Items::createItems(HP_ADD_TAG, GlobalParameter::hero->getPosition());
+			GlobalParameter::mapNow->getParent()->addChild(item, 2);
+		}
+		else if (randomItem < 0.4f)
+		{
+			Items* item = Items::createItems(MP_ADD_TAG, GlobalParameter::hero->getPosition());
+			GlobalParameter::mapNow->getParent()->addChild(item, 2);
+		}
+		else if (randomItem < 0.6f)
+		{
+			Items* item = Items::createItems(GUN_TAG, GlobalParameter::hero->getPosition());
+			GlobalParameter::mapNow->getParent()->addChild(item, 2);
+		}
+		else if (randomItem < 0.7f)
+		{
+			Items* item = Items::createItems(QUICKGUN_TAG, GlobalParameter::hero->getPosition());
+			GlobalParameter::mapNow->getParent()->addChild(item, 2);
+		}
+		else if (randomItem < 0.9f)
+		{
+			Items* item = Items::createItems(KNIFE_TAG, GlobalParameter::hero->getPosition());
+			GlobalParameter::mapNow->getParent()->addChild(item, 2);
+		}
+		else
+		{
+			//待添加
+
+		}
+
+		break;
+	}
+	//OPENED_BAOXIANG_TAG不需要发生交互
 	}
 }
 

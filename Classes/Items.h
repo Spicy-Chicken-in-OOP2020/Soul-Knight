@@ -13,6 +13,8 @@ USING_NS_CC;
 #define KNIFE_TAG 5
 #define GUN_TAG 6
 #define QUICKGUN_TAG 7
+#define BAOXIANG_TAG 8
+#define OPENED_BAOXIANG_TAG
 
 class Items:public Node{
 private:
