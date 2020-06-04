@@ -148,6 +148,9 @@ void SafeRoomScene::pauseButton(Ref*, TouchEventType type) {
 	switch (type) {
 	case TouchEventType::TOUCH_EVENT_ENDED: {
 		_pauseLayer->setVisible(true);
+		log("hi");
+		//ÓÎÏ·ÔİÍ£
+		CCDirector::sharedDirector()->pause();
 		break;
 	}
 	}

@@ -3,6 +3,7 @@
 #include "Knife.h"
 #include "gun.h"
 #include "QuickGun.h"
+#include "DialogManager.h"
 Items::Items() :_sprite(nullptr) {
 
 };
@@ -29,7 +30,27 @@ Items* Items::createItems(int itemsTag, Point position) {
 	/*道具属性*/
 	items->setTag(itemsTag);
 
-	
+	/*在此添加文本*/
+	switch (itemsTag)
+	{
+	case KNIFE_TAG:
+	{
+		break;
+	}
+	case GUN_TAG:
+	{
+		Label* label = Label::create("小伙子，\n你真的很有经验", "Arial", 24);
+		
+		items->addChild(label);
+		break;
+	}
+	case QUICKGUN_TAG:
+	{
+		Label* label = Label::create("小伙子，\n你真的很有经验", "Arial", 24);
+		items->addChild(label);
+		break;
+	}
+	}
 
 	/*宝箱类增大范围判定*/
 	if (items->getTag() == BAOXIANG_TAG)

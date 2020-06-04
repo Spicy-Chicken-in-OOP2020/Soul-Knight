@@ -17,6 +17,9 @@ PauseLayer* PauseLayer::createPauseLayer() {
 bool PauseLayer::init() {
 	if (!Layer::init())
 		return false;
+
+	
+
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	auto UI = cocostudio::GUIReader::getInstance()->widgetFromJsonFile("pauseLayer_1.ExportJson");
 	Button* Btn_home = (Button*)Helper::seekWidgetByName(UI, "Btn_home");
@@ -118,6 +121,9 @@ void PauseLayer::resumeEvent(Ref*, TouchEventType type) {
 	switch (type) {
 	case TouchEventType::TOUCH_EVENT_ENDED: {
 		_pauseLayer->setVisible(false);
+		log("Game Continued");
+		//ÓÎÏ·¼ÌĞø
+		CCDirector::sharedDirector()->resume();
 	}break;
 	}
 }

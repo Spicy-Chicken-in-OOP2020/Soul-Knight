@@ -272,7 +272,7 @@ void Monster::update(float dt) {
 				++iCount2;
 			else {
 				iCount2 = 0;
-				log("Not move1 !\n");
+				//log("Not move1 !\n");
 				this->changeDirection();
 			}
 		}
@@ -316,7 +316,7 @@ void Monster::update(float dt) {
 				++iCount2;
 			else {
 				iCount2 = 0;
-				log("Not move2 !\n");
+				//log("Not move2 !\n");
 				this->changeDirection();
 			}
 		}
@@ -372,7 +372,7 @@ bool  Monster::isStuck(const Point& objPos) {
 	Point tilesPos(objPos.x / tileSize.width, (mapSize.height * tileSize.height - objPos.y) / tileSize.height);
 
 	if (tilesPos.x < 0 || tilesPos.y < 0 || tilesPos.x >= layerSize.width || tilesPos.y >= layerSize.height) {
-		log("bad ways1\n");
+		//log("bad ways1\n");
 
 		return true;
 	}
@@ -387,7 +387,7 @@ bool  Monster::isStuck(const Point& objPos) {
 	//图块ID不为空，表示是障碍物
 	if (tiledGidcollsion != 0 || tiledGidcollsion1 != 0 || tiledGidOutside != 0 || tiledGidCan != 0) {
 
-		log("bad ways2\n");
+		//log("bad ways2\n");
 
 		return true;
 	}

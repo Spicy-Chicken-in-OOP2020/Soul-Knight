@@ -2,16 +2,16 @@
 #define __DialogManager_H__
 
 #include "cocos2d.h"
-#include "DialogLayer.h"
+
+using namespace cocos2d;
+USING_NS_CC;
 
 class DialogManager :public Node {
 public:
 	CREATE_FUNC(DialogManager);
+	static Scene* createDialog(const Vec2& pos,std::string,bool needDisappear);
 	virtual bool init();
-	virtual void update(float dt);
-	void addDialog(Hero* hero,Node* node);
 private:
-	Vector<DialogLayer*> dialogList;
+	void registeKeyBoardEvent();
 };
-#endif
-
+#endif // !__DialogManager_H__
