@@ -1,13 +1,9 @@
-# Soul-Knight
-## The huge project of OOP2020 in Tongji University SE
-##### 5.11 创建工程 Create the Project
+# Soul Knight项目说明文档
+>>同济大学软件学院2020年面向对象程序设计课程大项目
+## 项目信息
 
-##### 5.12~5.14 
+## 项目开发文档
 
-马家昱：标题画面设计
+## 游戏说明
 
-汪明杰：绘制安全地图和血条UI
 
-王立友：控制器设计
-
-李俊杰：人物基类 设计
