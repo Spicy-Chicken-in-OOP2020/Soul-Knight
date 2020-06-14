@@ -2,14 +2,26 @@
 #define _BULLET_H__
 
 #include "GlobalParameter.h"
+class Monster;
+#define CIRCULE 99
+#define SQUARE 98
+#define CIRCULENUM 16
+#define SQUARENUM 12
+#define PI 3.1415926535898
+#define SPEED 40
+#define R 10000
+class Boss;
 
 class Bullet :public Node
 {
 private:
+
 	//子弹状态
 	bool isActive;
 	//图片对象
 	Sprite* bulletSprite;
+	//动画对象
+	Sprite* actionSprite;
 	//子弹速度
 	int speed = 500;
 
@@ -17,12 +29,17 @@ private:
 	int finalX;
 	int finalY;
 
+	//子弹编号
+	int numBullet;
 public:
 	//构造函数
-	Bullet();
+	Bullet();//
+
+	Bullet(int numBullet);
 	virtual bool init();
 	//发射子弹
 	void shoot(Point position);
+	void shootForMonster(Point position,Monster* monster );
 	//设置子弹状态
 	void setActive(bool _isActive);
 	//获得子弹状态
@@ -33,5 +50,14 @@ public:
 	void bindSprite(Sprite *sprite);
 	//更新函数
 	void update(float dt);
+	//获得绑定的图像
+	Sprite* getBindSprite();
+
+	
+public:
+	/*Boss*/
+	Bullet(int tag,int );
+	bool initForBoss();
+	void shootBossBullet(const Point& pos,Boss* boss);
 };
 #endif // !_BULLET_H__
