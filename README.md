@@ -26,10 +26,10 @@
 
   姓名    |  分工   |
   :-----|:---------------|
-  汪明杰| 内容2    | 
-  李俊杰| 内容2    | 
-  王立友| 内容2    |
-  马家昱| 内容2    | 
+  汪明杰| 素材、武器类、子弹类、地刺 | 
+  李俊杰| 怪物类、boss类、道具类、商店 | 
+  王立友| buff与debuff、地图绘制、特殊地形、小地图 |
+  马家昱| UI界面绘制、金手指、键位选择 | 
 
 * 类的设计及继承关系
 ![image](https://github.com/Spicy-Chicken-in-OOP2020/Soul-Knight/blob/master/Resources/%E7%B1%BB%E7%9A%84%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png)
