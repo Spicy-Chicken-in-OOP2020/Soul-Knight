@@ -14,7 +14,7 @@
 * 项目github地址：
   <https://github.com/Spicy-Chicken-in-OOP2020/Soul-Knight>
 * 项目进度时间线：
-
+![Aaron Swartz](https://raw.githubusercontent.com/Spicy-Chicken-in-OOP2020/Soul-Knight/majiayuDev/Resources/%E6%97%B6%E9%97%B4%E7%BA%BF.png?token=ANVYNQ2LJJVMA4D6TMZZYZS65455Q)
 ## 项目开发文档
 * 选用引擎：Cocos2d-x 3.17.2
 
