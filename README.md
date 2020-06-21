@@ -88,7 +88,22 @@
         * UI与画面精美，高度还原游戏原貌
  
  * 代码亮点
-        * 
+ ```
+ static int cnt = 0;
+	if (cnt > 1000) {
+		cnt = 0;
+		auto s1 = ShootController::createForBoss(CIRCULE, this);
+		this->addChild(s1);
+		/*缓冲*/
+		for (int i = 0; i < 10000; ++i);
+
+		/*auto s2 = ShootController::createForBoss(SQUARE, this);
+		this->addChild(s2);*/
+	}
+	else {
+		++cnt;
+	}
+ ```
 ## 游戏说明
 
 ### 游戏简介
