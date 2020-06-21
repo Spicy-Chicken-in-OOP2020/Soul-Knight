@@ -88,6 +88,8 @@
         * UI与画面精美，高度还原游戏原貌
  
  * 代码亮点
+ 
+ * Boss向周围发射子弹
  ```
  static int cnt = 0;
 	if (cnt > 1000) {
@@ -102,8 +104,72 @@
 	}
 	else {
 		++cnt;
-	}
+	}	
  ```
+ 
+ * 障碍物判定
+ 
+ ```
+ bool Boss::isStuck(const Point& objPos) {
+	/*层大小*/
+	auto layerSize = _collisionLayer->getLayerSize();
+
+	//判断是否触及障碍物
+	Size mapSize = GlobalParameter::mapNow->getMapSize();
+	Size tileSize = GlobalParameter::mapNow->getTileSize();
+
+	/*转换为地图上的坐标系*/
+	Point tilesPos(objPos.x / tileSize.width, (mapSize.height * tileSize.height - objPos.y) / tileSize.height);
+
+	if (tilesPos.x < 0 || tilesPos.y < 0 || tilesPos.x >= layerSize.width || tilesPos.y >= layerSize.height) {
+		log("bad ways1\n");
+
+		return true;
+	}
+
+	/*获取地图格子的唯一表示*/
+	int tiledGidcollsion = _collisionLayer->getTileGIDAt(tilesPos);
+	int tiledGidcollsion1 = _collision1Layer->getTileGIDAt(tilesPos);
+	int tiledGidOutside = _outsideLayer->getTileGIDAt(tilesPos);
+	int tiledGidCan = _canLayer->getTileGIDAt(tilesPos);
+
+
+	//图块ID不为空，表示是障碍物
+	if (tiledGidcollsion != 0 || tiledGidcollsion1 != 0 || tiledGidOutside != 0 || tiledGidCan != 0) {
+
+		log("bad ways2\n");
+
+		return true;
+	}
+
+	return false;
+}
+```
+* 子弹爆炸特效
+
+```
+for (int i = 1; i <= iFrameNum; i++)
+	{
+		std::string se = StringUtils::format("Breath_%02d.png", i);
+		frame = frameCache->getSpriteFrameByName(StringUtils::format("Breath_%02d.png", i));
+		frameVec.pushBack(frame);
+	}
+	Animation* animation = Animation::createWithSpriteFrames(frameVec);
+	animation->setLoops(1);
+	animation->setDelayPerUnit(0.1f);
+
+	Animate* action = Animate::create(animation);
+
+	//创建一个回调函数
+	CallFunc* callFunc = CallFunc::create(
+		[&]() {
+		}
+	);
+
+	//组合动作
+	Action* actions = Sequence::create(action, callFunc, NULL);
+```
+
 ## 游戏说明
 
 ### 游戏简介
