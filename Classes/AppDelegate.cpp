@@ -118,8 +118,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     register_all_packages();
 
-    SceneManager::getInstance()->changeScene(SceneManager::SafeRoomScene);
-
+    SceneManager::getInstance()->changeScene(SceneManager::StartScene);
+   // SceneManager::getInstance()->changeScene(SceneManager::SafeRoomScene);
     
 
     return true;

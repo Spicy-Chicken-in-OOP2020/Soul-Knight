@@ -2,7 +2,16 @@
 #define _BULLET_H__
 
 #include "GlobalParameter.h"
+#include "Boss.h"
 class Monster;
+#define CIRCULE 99
+#define SQUARE 98
+#define CIRCULENUM 16
+#define SQUARENUM 12
+#define PI 3.1415926535898
+#define SPEED 50
+#define R 10000
+class Boss;
 
 class Bullet :public Node
 {
@@ -44,6 +53,17 @@ public:
 	void update(float dt);
 	//获得绑定的图像
 	Sprite* getBindSprite();
+
+	//地形碰撞出现;
+	void createBoom(Point poisition);
+	void createPoison(Point position);
+	void createIce(Point position);
+
+public:
+	/*Boss*/
+	Bullet(int tag, int);
+	bool initForBoss();
+	void shootBossBullet(const Point& pos, Boss* boss);
 
 	
 };

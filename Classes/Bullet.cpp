@@ -2,6 +2,12 @@
 #include "SafeRoomScene.h"
 #include "Monster.h"
 #include "Items.h"
+#include "TollgateScene.h"
+#include "terrainBomb.h"
+#include "terrainIce.h"
+#include "terrainPoison.h"
+#include "Boss.h"
+
 //构造函数
 Bullet::Bullet():numBullet(1){
 
@@ -117,10 +123,13 @@ bool Bullet::isArrive()
 	//判断是否触及障碍物
 	Size mapSize = GlobalParameter::mapNow->getMapSize();
 	Size tileSize = GlobalParameter::mapNow->getTileSize();
+	// 获取点击的openGL坐标
 
 	//读取当前所在地图的障碍物层
+	TMXLayer* metaLayer = GlobalParameter::mapNow->getLayer("meta");
 	TMXLayer* collisionLayer = GlobalParameter::mapNow->getLayer("collision");
-
+	TMXLayer* collision2Layer = GlobalParameter::mapNow->getLayer("collision2");
+    TMXLayer* canLayer = GlobalParameter::mapNow->getLayer("can");
 	//获得坐标在地图中的格子位置
 	Point tiledPos(position.x / tileSize.width, (mapSize.height * tileSize.height - position.y) / tileSize.height);
 
@@ -132,25 +141,122 @@ bool Bullet::isArrive()
 	}
 
 	//获取地图格子的唯一表示
-	int tiledGid = collisionLayer->getTileGIDAt(tiledPos);
+	int tiledGid = metaLayer->getTileGIDAt(tiledPos);
+
+	int tiledGidCan = canLayer->getTileGIDAt(tiledPos);
+	if (tiledGidCan!=0) {
+
+		Value propertiesCan = GlobalParameter::mapNow->getPropertiesForGID(tiledGidCan);
+		if (propertiesCan.isNull()) {
+			return true;
+		}
+		ValueMap propMapCan = propertiesCan.asValueMap();
+		if (propMapCan.find("Poison") != propMapCan.end()) {
+			Value prop = propMapCan.at("Poison");
+
+			if (prop.asString().compare("true") == 0) {
+
+				this->createPoison(position);
+				metaLayer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				canLayer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				if (collisionLayer->getTileGIDAt(tiledPos)) {
+					collisionLayer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				}
+				else {
+					collision2Layer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				}
+				log("ok, poison!");
+				return true;
+			}
+		}
+		if (propMapCan.find("Hot") != propMapCan.end()) {
+			Value prop = propMapCan.at("Hot");
+			if (prop.asString().compare("true") == 0) {
+
+				this->createBoom(position);
+
+				metaLayer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				canLayer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				if (collisionLayer->getTileGIDAt(tiledPos)) {
+					collisionLayer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				}
+				else {
+					collision2Layer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				}
+				log("ok, boom!");
+				return true;
+			}
+
+		}
+
+		if (propMapCan.find("Cold") != propMapCan.end()) {
+			Value prop = propMapCan.at("Cold");
+
+			if (prop.asString().compare("true") == 0) {
+
+				this->createIce(position);
+				metaLayer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				canLayer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				if (collisionLayer->getTileGIDAt(tiledPos)) {
+					collisionLayer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				}
+				else {
+					collision2Layer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				}
+				log("ok, ice!");
+				return true;
+			}
+
+		}
+		return true;
+	}
+
 
 	//图块ID不为空，表示是障碍物
 	if (tiledGid != 0)
 	{
-		return true;
+		Value properties = GlobalParameter::mapNow->getPropertiesForGID(tiledGid);
+		if (properties.isNull()) {
+			return true;
+		}
+		ValueMap propMap = properties.asValueMap();
 
+		if (propMap.find("Eat") != propMap.end()) {
+			Value prop = propMap.at("Eat");
+
+			if (prop.asString().compare("true") == 0) {
+				metaLayer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				if (collisionLayer->getTileGIDAt(tiledPos)) {
+					collisionLayer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				}
+				else {
+					collision2Layer->removeTileAt(Vec2(int(tiledPos.x), int(tiledPos.y)));
+				}
+				log("ok!");
+			}
+			else {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/*判断是否碰到敌人,别乱改*/
-	if (SafeRoomScene::_monsterManager != nullptr) {
-		Vector<Monster*>& monsterList = SafeRoomScene::_monsterManager->getMonsterList();
-		for(int i=0;i<monsterList.size();++i)
-			
-				if (HERO_BULLET == this->getTag() && this->getBoundingBox().intersectsRect(monsterList.at(i)->getBoundingBox())) {
-					log("monseter was  hurt !\n");
-					monsterList.at(i)->getHurt(1);
-					return true;
-				}		
+	if (TollgateScene::_monsterManager != nullptr) {
+		Vector<Monster*>& monsterList = TollgateScene::_monsterManager->getMonsterList();
+		for (int i = 0; i < monsterList.size(); ++i)
+
+			if (HERO_BULLET == this->getTag() && this->getBoundingBox().intersectsRect(monsterList.at(i)->getBoundingBox())) {
+				log("monseter was  hurt !\n");
+				monsterList.at(i)->getHurt(GlobalParameter::curAttack);
+				return true;
+			}
+	}
+
+	if (HERO_BULLET == this->getTag() && GlobalParameter::_bossNow && this->getBoundingBox().intersectsRect(GlobalParameter::_bossNow->getBoundingBox())) {
+		log("boss was hurt !");
+		GlobalParameter::_bossNow->getHurt(GlobalParameter::curAttack);
+		return true;
 	}
 
 	if (MONSTER_BULLET == this->getTag() && this->getBoundingBox().intersectsRect(GlobalParameter::hero->getBoundingBox())) {
@@ -231,4 +337,111 @@ bool Bullet::getActive()
 Sprite* Bullet::getBindSprite()
 {
 	return this->bulletSprite;
+}
+
+void Bullet::createBoom(Point position) {
+	SpriteFrameCache* frameCache = SpriteFrameCache::getInstance();
+	frameCache->addSpriteFramesWithFile("BreathImage.plist","BreathImage.png");
+	int iFrameNum = 15;
+	SpriteFrame* frame = NULL;
+	Vector<SpriteFrame*> frameVec;
+
+	for (int i = 1; i <= iFrameNum; i++)
+	{
+		std::string se = StringUtils::format("Breath_%02d.png", i);
+		frame = frameCache->getSpriteFrameByName(StringUtils::format("Breath_%02d.png", i));
+		frameVec.pushBack(frame);
+	}
+	Animation* animation = Animation::createWithSpriteFrames(frameVec);
+	animation->setLoops(1);
+	animation->setDelayPerUnit(0.1f);
+
+	Animate* action = Animate::create(animation);
+
+	//创建一个回调函数
+	CallFunc* callFunc = CallFunc::create(
+		[&]() {
+		}
+	);
+
+	//组合动作
+	Action* actions = Sequence::create(action, callFunc, NULL);
+
+	auto boomLayer = terrainBomb::create();
+	Sprite* sprite = Sprite::create();
+//	sprite->setAnchorPoint(Point(0, 0));
+	boomLayer->bindSprite(sprite);
+	boomLayer->setCenterPoint(Point(position.x, position.y));
+	boomLayer->setPosition(Point(position.x, position.y));
+	sprite->runAction(actions);
+//	sprite->setVisible(false);
+	GlobalParameter::curMapLayer->addChild(boomLayer, 3);
+}
+void Bullet::createPoison(Point position) {
+	auto poisonLayer = terrainPoison::create();
+	Sprite* sprite = Sprite::create("poisonFog.png");
+//	sprite->setAnchorPoint(Point(0, 0));
+	poisonLayer->bindSprite(sprite);
+	poisonLayer->setCenterPoint(Point(position.x, position.y));
+	poisonLayer->setPosition(Point(position.x, position.y));
+
+	FadeIn* fadeIn = FadeIn::create(1.0f);
+	sprite->runAction(fadeIn);
+	GlobalParameter::curMapLayer->addChild(poisonLayer, 3);
+}
+void Bullet::createIce(Point position) {
+	auto iceLayer = terrainIce::create();
+	Sprite* sprite = Sprite::create("iceFog.png");
+//	sprite->setAnchorPoint(Point(0, 0));
+	iceLayer->bindSprite(sprite);
+	iceLayer->setCenterPoint(Point(position.x, position.y));
+	iceLayer->setPosition(Point(position.x, position.y));
+
+	FadeIn* fadeIn = FadeIn::create(1.0f);
+	sprite->runAction(fadeIn);
+	GlobalParameter::curMapLayer->addChild(iceLayer, 3);
+}
+
+//Boss
+Bullet::Bullet(int tag, int) {
+	this->numBullet = tag;
+	this->setTag(MONSTER_BULLET);
+	this->initForBoss();
+
+}
+
+bool Bullet::initForBoss() {
+	if (!Node::init())
+		return false;
+
+	//设置初始状态
+	log("Bullet Created;");
+
+	//绑定图片
+	Sprite* sprite = nullptr;
+	if (numBullet == CIRCULE)
+		sprite = Sprite::create("BossCircularBullet.png");
+	else if (numBullet == SQUARE)
+		sprite = Sprite::create("BossSquareBullet.png");
+	this->bindSprite(sprite);
+
+	//设置运动状态
+	this->setActive(true);
+
+
+	return true;
+}
+
+void Bullet::shootBossBullet(const Point& objpos, Boss* boss) {
+	this->setPosition(boss->getPosition());
+	log("boss bullet shoot !");
+	MoveTo* moveTo = MoveTo::create(
+		R / SPEED,
+		objpos);
+
+	//bulletSprite
+	this->runAction(moveTo);
+
+	//添加移动事件
+	this->scheduleUpdate();
 }
