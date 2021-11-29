@@ -91,7 +91,7 @@
  * 代码亮点
  
  * Boss向周围发射子弹
- ```
+ ```c++
  static int cnt = 0;
 	if (cnt > 1000) {
 		cnt = 0;
@@ -110,7 +110,7 @@
  
  * 障碍物判定
  
- ```
+ ```c++
  bool Boss::isStuck(const Point& objPos) {
 	/*层大小*/
 	auto layerSize = _collisionLayer->getLayerSize();
@@ -148,7 +148,7 @@
 ```
 * 子弹爆炸特效
 
-```
+```c++
 for (int i = 1; i <= iFrameNum; i++)
 	{
 		std::string se = StringUtils::format("Breath_%02d.png", i);
